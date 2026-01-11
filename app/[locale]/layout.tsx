@@ -1,12 +1,12 @@
 /**
- * Root Layout
- * Provides i18n context and global styles
+ * Root Layout - Ma Sera Egypt
+ * Premium menu website with elegant typography
  */
 
 import { Suspense } from 'react'
 import { notFound } from 'next/navigation'
 import { GoogleTagManager } from '@next/third-parties/google'
-import { Inter } from 'next/font/google'
+import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { locales, localeDirections } from '@/i18n/config'
@@ -14,39 +14,52 @@ import { PageViewTracker } from '@/components/PageViewTracker'
 import CookieConsent from '@/components/CookieConsent'
 import { VisualEditing } from '@/components/VisualEditing'
 import { Metadata } from 'next'
-import { cms } from '@/lib/cms'
 import '../globals.css'
 
-// Configure Inter font from Google Fonts with fallback
+// Configure fonts from Google Fonts
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
-  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-  adjustFontFallback: true,
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700'],
+})
+
+const greatVibes = Great_Vibes({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-script',
+  weight: '400',
 })
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-
-  const settings = await cms.getSiteSettings()
-
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: {
-      default: settings?.seo?.metaTitle || 'Vista Store',
-      template: `%s | ${settings?.seo?.metaTitle || 'Vista Store'}`,
+      default: 'Ma Sera | Every Hour, a New Memory',
+      template: '%s | Ma Sera Egypt',
     },
-    description: settings?.seo?.metaDescription || settings?.footerDescription,
-    keywords: settings?.seo?.keywords,
+    description: 'Premium breakfast, brunch, and café cuisine in Alexandria, Egypt. Fresh ingredients, artisan recipes, unforgettable moments.',
+    keywords: ['Ma Sera', 'Alexandria restaurant', 'Egypt cafe', 'breakfast', 'brunch', 'focaccia', 'coffee'],
     icons: {
-      icon: settings?.favicon?.url || '/favicon.ico',
+      icon: '/favicon.ico',
     },
-    openGraph: settings?.seo?.ogImage ? {
-      images: [{ url: settings.seo.ogImage.url }],
-    } : undefined,
+    openGraph: {
+      title: 'Ma Sera | Every Hour, a New Memory',
+      description: 'Premium breakfast, brunch, and café cuisine in Alexandria, Egypt.',
+      type: 'website',
+      locale: 'en_EG',
+      siteName: 'Ma Sera Egypt',
+    },
   }
 }
 
@@ -70,7 +83,7 @@ export default async function RootLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} dir={direction} className={inter.variable}>
+    <html lang={locale} dir={direction} className={`${inter.variable} ${playfair.variable} ${greatVibes.variable}`}>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body className={inter.className}>
         {gtmId && (
