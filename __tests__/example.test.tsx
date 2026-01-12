@@ -17,16 +17,16 @@ vi.mock('../lib/menu', () => ({
 }))
 
 describe('Menu Page', () => {
-  it('renders the hero section', async () => {
+  it('renders the hero section with logo', async () => {
     const jsx = await MenuPage()
-    const { getByText } = render(jsx)
-    expect(getByText('Ma Sera')).toBeInTheDocument()
+    const { getByAltText } = render(jsx)
+    expect(getByAltText('Ma Sera - Every Hour, a New Memory')).toBeInTheDocument()
   })
 
-  it('displays tagline', async () => {
+  it('renders footer logo', async () => {
     const jsx = await MenuPage()
-    const { getByText } = render(jsx)
-    expect(getByText(/Every Hour, a New Memory/i)).toBeInTheDocument()
+    const { getByAltText } = render(jsx)
+    expect(getByAltText('Ma Sera')).toBeInTheDocument()
   })
 })
 
