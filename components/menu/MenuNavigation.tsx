@@ -73,7 +73,10 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
     const handleClick = (slug: string) => {
         const element = document.getElementById(`category-${slug}`)
         if (element) {
-            const offset = 120
+            // Dynamic offset based on navbar height + buffer
+            const navHeight = navRef.current?.offsetHeight || 80
+            const offset = navHeight + 20
+
             const top = element.getBoundingClientRect().top + window.scrollY - offset
             window.scrollTo({ top, behavior: 'smooth' })
         }
