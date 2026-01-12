@@ -17,7 +17,6 @@ import {
 
 interface PageProps {
     params: Promise<{
-        locale: string
         slug: string
     }>
 }
@@ -97,8 +96,8 @@ export default async function BranchMenuPage({ params }: PageProps) {
             {/* Empty State */}
             {groupedMenu.length === 0 && (
                 <section className="py-20 text-center">
-                    <div className="container">
-                        <p className="text-xl text-[var(--muted)]">
+                    <div className="container-narrow">
+                        <p className="text-xl text-[var(--color-text-muted)]">
                             Menu items not configured for this branch yet.
                         </p>
                     </div>

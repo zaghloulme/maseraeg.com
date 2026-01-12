@@ -77,7 +77,7 @@ export default function ContactSection({ branches = [] }: ContactSectionProps) {
                     Facebook
                 </Link>
                 <Link
-                    href="https://www.talabat.com/egypt"
+                    href="https://www.talabat.com/egypt/ma-sera"
                     target="_blank"
                     className="footer-link"
                 >

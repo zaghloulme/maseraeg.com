@@ -49,29 +49,11 @@ export default function Hero({ showPrices = false, branchName }: HeroProps) {
                     </div>
                 )}
 
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 animate-fade-in-up delay-4">
+                {/* CTA Button */}
+                <div className="mt-12 animate-fade-in-up delay-4">
                     <Link href="#menu" className="btn-primary">
                         Explore Menu
                     </Link>
-                    <div className="flex gap-4">
-                        <Link
-                            href="https://www.instagram.com/masera.eg/"
-                            target="_blank"
-                            className="btn-outline"
-                            aria-label="Follow on Instagram"
-                        >
-                            Instagram
-                        </Link>
-                        <Link
-                            href="https://www.facebook.com/p/Ma-Sera-61571401528468/"
-                            target="_blank"
-                            className="btn-outline"
-                            aria-label="Follow on Facebook"
-                        >
-                            Facebook
-                        </Link>
-                    </div>
                 </div>
 
                 {/* Price Notice */}

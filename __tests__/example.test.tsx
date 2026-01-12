@@ -5,44 +5,28 @@
 
 import { describe, it, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
-import HomePage from '../app/[locale]/page'
+import MenuPage from '../app/page'
 
-// Mock the CMS service to return predictable data for tests
-vi.mock('../lib/cms', () => ({
-  cms: {
-    getHomepageSettings: vi.fn().mockResolvedValue({
-      sections: [
-        {
-          _type: 'hero',
-          _key: 'hero-1',
-          title: 'Slate Template',
-        },
-        {
-          _type: 'features',
-          _key: 'features-1',
-          items: [
-            { title: 'Swappable CMS Architecture' },
-            { title: 'Full Internationalization' },
-          ],
-        },
-      ],
-    }),
-    getSiteSettings: vi.fn().mockResolvedValue({}),
-  },
+// Mock the menu queries
+vi.mock('../lib/menu', () => ({
+  getBranches: vi.fn().mockResolvedValue([]),
+  getMenuCategories: vi.fn().mockResolvedValue([]),
+  getMenuItems: vi.fn().mockResolvedValue([]),
+  transformMenuItemsForDisplay: vi.fn().mockReturnValue([]),
+  groupItemsByCategory: vi.fn().mockReturnValue([]),
 }))
 
-describe('Home Page', () => {
-  it('renders the heading', async () => {
-    const jsx = await HomePage()
+describe('Menu Page', () => {
+  it('renders the hero section', async () => {
+    const jsx = await MenuPage()
     const { getByText } = render(jsx)
-    expect(getByText('Slate Template')).toBeInTheDocument()
+    expect(getByText('Ma Sera')).toBeInTheDocument()
   })
 
-  it('displays features list', async () => {
-    const jsx = await HomePage()
+  it('displays tagline', async () => {
+    const jsx = await MenuPage()
     const { getByText } = render(jsx)
-    expect(getByText(/Swappable CMS Architecture/i)).toBeInTheDocument()
-    expect(getByText(/Full Internationalization/i)).toBeInTheDocument()
+    expect(getByText(/Every Hour, a New Memory/i)).toBeInTheDocument()
   })
 })
 
