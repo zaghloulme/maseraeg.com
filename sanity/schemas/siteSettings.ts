@@ -50,6 +50,9 @@ export default defineType({
     }),
   ],
   preview: {
+    select: {
+      _type: '_type',
+    },
     prepare() {
       return { title: 'Site Settings' }
     }

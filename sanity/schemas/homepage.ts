@@ -28,11 +28,11 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      _type: '_type',
     },
-    prepare({ title }) {
+    prepare() {
       return {
-        title: title || 'Homepage',
+        title: 'Homepage',
       }
     },
   },
