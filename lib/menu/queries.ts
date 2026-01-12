@@ -44,6 +44,7 @@ export interface MenuItem {
         branch: { _id: string; slug: { current: string } }
         price: number
         isAvailable: boolean
+        isHighlighted?: boolean
     }>
     dietaryTags?: string[]
     displayOrder: number
@@ -52,7 +53,62 @@ export interface MenuItem {
     isPopular?: boolean
 }
 
+// Homepage Types
+export interface FeatureItem {
+    title: string
+    description: string
+    icon: string
+}
+
+export interface FeaturesSection {
+    _type: 'features'
+    title: string
+    items: FeatureItem[]
+}
+
+export interface HeroSection {
+    _type: 'hero'
+    title: string
+    subtitle: string
+    image: unknown
+    ctaText: string
+    ctaLink: string
+}
+
+export type HomepageSection = FeaturesSection | HeroSection
+
+export interface HomepageData {
+    title: string
+    sections?: HomepageSection[]
+}
+
 // Queries
+export async function getHomepage(): Promise<HomepageData> {
+    return client.fetch(`
+    *[_type == "homepage"][0] {
+      title,
+      sections[]{
+        _type,
+        _type == 'hero' => {
+          title,
+          subtitle,
+          image,
+          ctaText,
+          ctaLink
+        },
+        _type == 'features' => {
+          title,
+          items[]{
+            title,
+            description,
+            icon
+          }
+        }
+      }
+    }
+  `)
+}
+
 export async function getBranches(): Promise<Branch[]> {
     return client.fetch(`
     *[_type == "branch" && isActive == true] | order(name asc) {
@@ -116,7 +172,8 @@ export async function getMenuItems(): Promise<MenuItem[]> {
           slug
         },
         price,
-        isAvailable
+        isAvailable,
+        isHighlighted
       },
       dietaryTags,
       displayOrder,
@@ -146,6 +203,7 @@ export function transformMenuItemsForDisplay(
     return items.map((item) => {
         let price: number | undefined
         let isAvailable = true
+        let isPopular = item.isPopular
 
         if (branchSlug && item.branchPricing) {
             const branchPrice = item.branchPricing.find(
@@ -154,6 +212,7 @@ export function transformMenuItemsForDisplay(
             if (branchPrice) {
                 price = branchPrice.price
                 isAvailable = branchPrice.isAvailable !== false
+                isPopular = !!branchPrice.isHighlighted
             }
         }
 
@@ -171,7 +230,7 @@ export function transformMenuItemsForDisplay(
             price,
             dietaryTags: item.dietaryTags,
             isNew: item.isNew,
-            isPopular: item.isPopular,
+            isPopular,
             isAvailable,
         }
     })

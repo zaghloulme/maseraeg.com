@@ -5,13 +5,15 @@
 
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { Hero, MenuNavigation, MenuSection, ContactSection } from '@/components/menu'
+import { Hero, MenuNavigation, MenuSection, ContactSection, Features } from '@/components/menu'
 import {
     getBranches,
     getMenuCategories,
     getMenuItems,
+    getHomepage,
     transformMenuItemsForDisplay,
     groupItemsByCategory,
+    type HeroSection as HeroSectionType,
 } from '@/lib/menu'
 
 export const metadata: Metadata = {
@@ -28,11 +30,16 @@ export const metadata: Metadata = {
 
 export default async function MenuPage() {
     // Fetch data from Sanity
-    const [branches, categories, menuItems] = await Promise.all([
+    const [branches, categories, menuItems, homepage] = await Promise.all([
         getBranches(),
         getMenuCategories(),
         getMenuItems(),
+        getHomepage(),
     ])
+
+    // Extract sections
+    const heroSection = homepage?.sections?.find((s) => s._type === 'hero') as HeroSectionType | undefined
+    const featureSections = homepage?.sections?.filter((s) => s._type === 'features') || []
 
     // Transform items for display (no branch slug = no prices)
     const displayItems = transformMenuItemsForDisplay(menuItems)
@@ -42,8 +49,13 @@ export default async function MenuPage() {
 
     return (
         <main className="min-h-screen">
-            {/* Hero with branding */}
-            <Hero showPrices={false} />
+            {/* Hero with Sanity data */}
+            <Hero showPrices={false} data={heroSection} />
+
+            {/* Content Sections from Sanity */}
+            {featureSections.map((section, idx) => (
+                <Features key={idx} data={section as any} />
+            ))}
 
             {/* Category Navigation */}
             {categories.length > 0 && (
@@ -67,7 +79,7 @@ export default async function MenuPage() {
                 <section className="py-20 text-center">
                     <div className="container-narrow">
                         <p className="text-xl text-[var(--color-text-muted)]">
-                            Menu coming soon. Please add items in Sanity Studio.
+                            Menu items not configured. Please add items in Sanity Studio.
                         </p>
                         <Link
                             href="/studio"

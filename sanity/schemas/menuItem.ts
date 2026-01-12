@@ -64,6 +64,13 @@ export default defineType({
                             type: 'boolean',
                             initialValue: true,
                         }),
+                        defineField({
+                            name: 'isHighlighted',
+                            title: 'Highlight in this branch',
+                            type: 'boolean',
+                            description: 'Mark as a featured/popular item unique to this branch',
+                            initialValue: false,
+                        }),
                     ],
                     preview: {
                         select: {

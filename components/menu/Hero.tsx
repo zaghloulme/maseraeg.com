@@ -2,13 +2,24 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { HeroSection } from '@/lib/menu'
+import { urlFor } from '@/sanity/lib/image'
 
 interface HeroProps {
     showPrices?: boolean
     branchName?: string
+    data?: HeroSection
 }
 
-export default function Hero({ showPrices = false, branchName }: HeroProps) {
+export default function Hero({ showPrices = false, branchName, data }: HeroProps) {
+    const content = {
+        title: data?.title,
+        subtitle: data?.subtitle || "Where culinary artistry meets cherished moments.\nEach dish tells a story, each visit becomes a memory.",
+        ctaText: data?.ctaText || "Explore Menu",
+        ctaLink: data?.ctaLink || "#menu",
+        image: data?.image
+    }
+
     return (
         <section className="hero-landing">
             {/* Branch Name - only on branch pages */}
@@ -20,28 +31,43 @@ export default function Hero({ showPrices = false, branchName }: HeroProps) {
 
             {/* Main Content */}
             <div className="relative z-10 max-w-3xl mx-auto">
-                {/* Logo Image */}
+                {/* Logo or Hero Image */}
                 <div className="animate-fade-in-up">
-                    <Image
-                        src="/images/logo.png"
-                        alt="Ma Sera - Every Hour, a New Memory"
-                        width={400}
-                        height={300}
-                        priority
-                        className="mx-auto w-[280px] md:w-[400px] h-auto brightness-0 invert"
-                    />
+                    {content.image ? (
+                        <Image
+                            src={urlFor(content.image).width(800).url()}
+                            alt={content.title || "Ma Sera"}
+                            width={400}
+                            height={300}
+                            priority
+                            className="mx-auto w-[280px] md:w-[400px] h-auto"
+                        />
+                    ) : (
+                        <Image
+                            src="/images/logo.png"
+                            alt="Ma Sera - Every Hour, a New Memory"
+                            width={400}
+                            height={300}
+                            priority
+                            className="mx-auto w-[280px] md:w-[400px] h-auto brightness-0 invert"
+                        />
+                    )}
                 </div>
 
+                {/* Title (if text based and NO image?) OR if title provided */}
+                {content.title && !content.image && (
+                    <h1 className="text-4xl md:text-5xl font-serif text-[var(--color-gold)] mt-8">{content.title}</h1>
+                )}
+
                 {/* Story Text */}
-                <p className="mt-4 text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed animate-fade-in-up delay-2">
-                    Where culinary artistry meets cherished moments.
-                    Each dish tells a story, each visit becomes a memory.
+                <p className="mt-4 text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed animate-fade-in-up delay-2 whitespace-pre-line">
+                    {content.subtitle}
                 </p>
 
                 {/* CTA Button */}
                 <div className="mt-10 animate-fade-in-up delay-3">
-                    <Link href="#menu" className="btn-primary">
-                        Explore Menu
+                    <Link href={content.ctaLink} className="btn-primary">
+                        {content.ctaText}
                     </Link>
                 </div>
 
