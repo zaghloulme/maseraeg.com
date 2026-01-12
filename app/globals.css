@@ -184,7 +184,13 @@ h4 {
   width: 60px;
   height: 1px;
   background: var(--color-gold);
-  margin: 1.5rem auto;
+  margin: 1.5rem 0;
+}
+
+@media (min-width: 768px) {
+  .accent-line {
+    margin: 1.5rem auto;
+  }
 }
 
 /* Ornamental Border */
@@ -256,8 +262,14 @@ h4 {
 
 /* Category Header */
 .category-header {
-  text-align: center;
+  text-align: left;
   margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .category-header {
+    text-align: center;
+  }
 }
 
 /* ========================================
