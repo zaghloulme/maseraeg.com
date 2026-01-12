@@ -270,17 +270,21 @@ h4 {
 
 .menu-item-name {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   font-weight: 500;
+  font-style: italic;
   color: var(--color-cream);
   flex: 1;
+  letter-spacing: 0.02em;
 }
 
 .menu-item-price {
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 1.15rem;
+  font-weight: 500;
   color: var(--color-gold);
   white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
 .menu-item-description {

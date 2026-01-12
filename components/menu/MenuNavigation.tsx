@@ -65,6 +65,7 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
                                 onClick={() => handleClick(category.slug.current)}
                                 className={`
                   px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200
+                  font-serif tracking-wide
                   ${isActive
                                         ? 'bg-[var(--color-gold)] text-[#1c3149] shadow-lg'
                                         : 'text-[var(--color-text-secondary)] hover:text-[var(--color-cream)] hover:bg-white/10'
