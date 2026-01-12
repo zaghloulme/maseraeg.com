@@ -8,19 +8,33 @@ export default function PageLoader() {
     const [isAnimating, setIsAnimating] = useState(true)
 
     useEffect(() => {
-        // Short delay to ensure content is ready
-        const timer = setTimeout(() => {
+        // Lock scroll during loading
+        document.body.classList.add('loading')
+        document.documentElement.style.overflow = 'hidden'
+
+        // Start reveal after logo animation
+        const revealTimer = setTimeout(() => {
             setIsLoading(false)
         }, 1200)
 
-        // Remove from DOM after animation completes
+        // Unlock scroll and trigger content animations
+        const unlockTimer = setTimeout(() => {
+            document.body.classList.remove('loading')
+            document.body.classList.add('loaded')
+            document.documentElement.style.overflow = ''
+        }, 2000)
+
+        // Remove loader from DOM
         const removeTimer = setTimeout(() => {
             setIsAnimating(false)
-        }, 2400)
+        }, 2800)
 
         return () => {
-            clearTimeout(timer)
+            clearTimeout(revealTimer)
+            clearTimeout(unlockTimer)
             clearTimeout(removeTimer)
+            document.body.classList.remove('loading')
+            document.documentElement.style.overflow = ''
         }
     }, [])
 

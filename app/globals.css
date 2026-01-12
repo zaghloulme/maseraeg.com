@@ -737,6 +737,48 @@ h4 {
   opacity: 0;
 }
 
+/* Content animations wait for loader to complete */
+body.loading .animate-fade-in,
+body.loading .animate-fade-in-up,
+body.loading .animate-float {
+  animation: none;
+  opacity: 0;
+}
+
+body.loaded .animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+body.loaded .animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+body.loaded .animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Hero section entrance after loader */
+body.loading .hero-landing {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+body.loaded .hero-landing {
+  animation: heroReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes heroReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* ========================================
    UTILITIES
    ======================================== */
