@@ -14,6 +14,20 @@ export default defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
+            name: 'type',
+            title: 'Category Type',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Food', value: 'food' },
+                    { title: 'Drink', value: 'drink' },
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'food',
+            validation: (Rule) => Rule.required(),
+        }),
+        defineField({
             name: 'description',
             title: 'Description',
             type: 'text',

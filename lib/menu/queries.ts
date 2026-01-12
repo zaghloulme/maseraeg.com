@@ -4,87 +4,88 @@ import imageUrlBuilder from '@sanity/image-url'
 const builder = imageUrlBuilder(client)
 
 function urlFor(source: unknown) {
-    return builder.image(source as Parameters<typeof builder.image>[0])
+  return builder.image(source as Parameters<typeof builder.image>[0])
 }
 
 // Types
 export interface Branch {
-    _id: string
-    name: string
-    slug: { current: string }
-    address?: string
-    phone?: string
-    whatsapp?: string
-    operatingHours?: string
-    googleMapsUrl?: string
-    isActive: boolean
+  _id: string
+  name: string
+  slug: { current: string }
+  address?: string
+  phone?: string
+  whatsapp?: string
+  operatingHours?: string
+  googleMapsUrl?: string
+  isActive: boolean
 }
 
 export interface MenuCategory {
-    _id: string
-    name: string
-    slug?: { current: string }
-    description?: string
-    image?: unknown
-    displayOrder: number
-    isActive: boolean
+  _id: string
+  name: string
+  slug?: { current: string }
+  description?: string
+  image?: unknown
+  displayOrder: number
+  isActive: boolean
+  type?: 'food' | 'drink'
 }
 
 export interface MenuItem {
+  _id: string
+  name: string
+  description?: string
+  image?: unknown
+  category: {
     _id: string
-    name: string
-    description?: string
-    image?: unknown
-    category: {
-        _id: string
-        name?: string
-        slug?: { current: string }
-    }
-    branchPricing?: Array<{
-        branch: { _id: string; slug: { current: string } }
-        price: number
-        isAvailable: boolean
-        isHighlighted?: boolean
-    }>
-    dietaryTags?: string[]
-    displayOrder: number
-    isActive: boolean
-    isNew?: boolean
-    isPopular?: boolean
+    name?: string
+    slug?: { current: string }
+  }
+  branchPricing?: Array<{
+    branch: { _id: string; slug: { current: string } }
+    price: number
+    isAvailable: boolean
+    isHighlighted?: boolean
+  }>
+  dietaryTags?: string[]
+  displayOrder: number
+  isActive: boolean
+  isNew?: boolean
+  isPopular?: boolean
 }
 
 // Homepage Types
 export interface FeatureItem {
-    title: string
-    description: string
-    icon: string
+  title: string
+  description: string
+  icon: string
 }
 
 export interface FeaturesSection {
-    _type: 'features'
-    title: string
-    items: FeatureItem[]
+  _type: 'features'
+  title: string
+  items: FeatureItem[]
 }
 
 export interface HeroSection {
-    _type: 'hero'
-    title: string
-    subtitle: string
-    image: unknown
-    ctaText: string
-    ctaLink: string
+  _type: 'hero'
+  title: string
+  subtitle: string
+  image: unknown
+  ctaText: string
+  ctaLink: string
 }
 
 export type HomepageSection = FeaturesSection | HeroSection
 
 export interface HomepageData {
-    title: string
-    sections?: HomepageSection[]
+  title: string
+  sections?: HomepageSection[]
 }
 
 // Queries
 export async function getHomepage(): Promise<HomepageData> {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "homepage"][0] {
       title,
       sections[]{
@@ -110,7 +111,7 @@ export async function getHomepage(): Promise<HomepageData> {
 }
 
 export async function getBranches(): Promise<Branch[]> {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "branch" && isActive == true] | order(name asc) {
       _id,
       name,
@@ -126,7 +127,7 @@ export async function getBranches(): Promise<Branch[]> {
 }
 
 export async function getBranchBySlug(slug: string): Promise<Branch | null> {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "branch" && slug.current == $slug && isActive == true][0] {
       _id,
       name,
@@ -141,23 +142,27 @@ export async function getBranchBySlug(slug: string): Promise<Branch | null> {
 }
 
 export async function getMenuCategories(): Promise<MenuCategory[]> {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "menuCategory" && isActive == true] | order(displayOrder asc) {
       _id,
       name,
       slug,
       description,
       image,
+      description,
+      image,
       displayOrder,
-      isActive
+      isActive,
+      type
     }
   `)
 }
 
 export async function getMenuItems(): Promise<MenuItem[]> {
-    return client.fetch(`
+  return client.fetch(`
     *[_type == "menuItem" && isActive == true] | order(displayOrder asc) {
       _id,
+      _type,
       name,
       description,
       image,
@@ -186,73 +191,73 @@ export async function getMenuItems(): Promise<MenuItem[]> {
 
 // Transform menu items for display
 export function transformMenuItemsForDisplay(
-    items: MenuItem[],
-    branchSlug?: string
+  items: MenuItem[],
+  branchSlug?: string
 ): Array<{
-    _id: string
-    name: string
-    description?: string
-    image?: { url: string; alt?: string }
-    categorySlug: string
-    price?: number
-    dietaryTags?: string[]
-    isNew?: boolean
-    isPopular?: boolean
-    isAvailable: boolean
+  _id: string
+  name: string
+  description?: string
+  image?: { url: string; alt?: string }
+  categorySlug: string
+  price?: number
+  dietaryTags?: string[]
+  isNew?: boolean
+  isPopular?: boolean
+  isAvailable: boolean
 }> {
-    return items.map((item) => {
-        let price: number | undefined
-        let isAvailable = true
-        let isPopular = item.isPopular
+  return items.map((item) => {
+    let price: number | undefined
+    let isAvailable = true
+    let isPopular = item.isPopular
 
-        if (branchSlug && item.branchPricing) {
-            const branchPrice = item.branchPricing.find(
-                (bp) => bp.branch?.slug?.current === branchSlug
-            )
-            if (branchPrice) {
-                price = branchPrice.price
-                isAvailable = branchPrice.isAvailable !== false
-                isPopular = !!branchPrice.isHighlighted
-            }
-        }
+    if (branchSlug && item.branchPricing) {
+      const branchPrice = item.branchPricing.find(
+        (bp) => bp.branch?.slug?.current === branchSlug
+      )
+      if (branchPrice) {
+        price = branchPrice.price
+        isAvailable = branchPrice.isAvailable !== false
+        isPopular = !!branchPrice.isHighlighted
+      }
+    }
 
-        return {
-            _id: item._id,
-            name: item.name,
-            description: item.description,
-            image: item.image
-                ? {
-                    url: urlFor(item.image).width(600).height(450).url(),
-                    alt: item.name,
-                }
-                : undefined,
-            categorySlug: item.category?.slug?.current || item.category?.name?.toLowerCase().replace(/\s+/g, '-') || '',
-            price,
-            dietaryTags: item.dietaryTags,
-            isNew: item.isNew,
-            isPopular,
-            isAvailable,
+    return {
+      _id: item._id,
+      name: item.name,
+      description: item.description,
+      image: item.image
+        ? {
+          url: urlFor(item.image).width(600).height(450).url(),
+          alt: item.name,
         }
-    })
+        : undefined,
+      categorySlug: item.category?.slug?.current || item.category?.name?.toLowerCase().replace(/\s+/g, '-') || '',
+      price,
+      dietaryTags: item.dietaryTags,
+      isNew: item.isNew,
+      isPopular,
+      isAvailable,
+    }
+  })
 }
 
 // Group items by category
 export function groupItemsByCategory(
-    items: ReturnType<typeof transformMenuItemsForDisplay>,
-    categories: MenuCategory[]
+  items: ReturnType<typeof transformMenuItemsForDisplay>,
+  categories: MenuCategory[]
 ): Array<{
-    category: MenuCategory
-    items: typeof items
+  category: MenuCategory
+  items: typeof items
 }> {
-    return categories
-        .map((category) => {
-            const catSlug = category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')
-            return {
-                category,
-                items: items.filter(
-                    (item) => item.categorySlug === catSlug && item.isAvailable
-                ),
-            }
-        })
-        .filter((group) => group.items.length > 0)
+  return categories
+    .map((category) => {
+      const catSlug = category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')
+      return {
+        category,
+        items: items.filter(
+          (item) => item.categorySlug === catSlug && item.isAvailable
+        ),
+      }
+    })
+    .filter((group) => group.items.length > 0)
 }
