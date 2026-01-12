@@ -28,6 +28,12 @@ export default defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
+            name: 'subCategory',
+            title: 'Sub Category',
+            type: 'string',
+            description: 'Optional grouping within category (e.g. "Omelets")',
+        }),
+        defineField({
             name: 'image',
             title: 'Item Image',
             type: 'image',
