@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Branch {
     name: string
     address?: string
     phone?: string
-    whatsapp?: string
     operatingHours?: string
+    googleMapsUrl?: string
 }
 
 interface ContactSectionProps {
@@ -13,14 +14,16 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({ branches = [] }: ContactSectionProps) {
-    const whatsappNumber = branches[0]?.whatsapp || '+201234567890'
-    const whatsappLink = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}`
-
     return (
         <footer className="footer-elegant">
             {/* Logo */}
-            <div className="footer-logo">Ma Sera</div>
-            <p className="footer-tagline">Every Hour, a New Memory</p>
+            <Image
+                src="/images/logo.png"
+                alt="Ma Sera"
+                width={200}
+                height={150}
+                className="mx-auto mb-4 w-[150px] h-auto brightness-0 invert opacity-80"
+            />
 
             {/* Divider */}
             <div className="divider">
@@ -36,9 +39,28 @@ export default function ContactSection({ branches = [] }: ContactSectionProps) {
                     <div className="space-y-4">
                         {branches.map((branch, index) => (
                             <div key={index} className="text-sm">
-                                <p className="text-[var(--color-cream)] font-medium">{branch.name}</p>
-                                {branch.address && (
-                                    <p className="text-[var(--color-text-muted)]">{branch.address}</p>
+                                {branch.googleMapsUrl ? (
+                                    <Link
+                                        href={branch.googleMapsUrl}
+                                        target="_blank"
+                                        className="group"
+                                    >
+                                        <p className="text-[var(--color-cream)] font-medium group-hover:text-[var(--color-gold)] transition-colors">
+                                            {branch.name} ↗
+                                        </p>
+                                        {branch.address && (
+                                            <p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors">
+                                                {branch.address}
+                                            </p>
+                                        )}
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <p className="text-[var(--color-cream)] font-medium">{branch.name}</p>
+                                        {branch.address && (
+                                            <p className="text-[var(--color-text-muted)]">{branch.address}</p>
+                                        )}
+                                    </>
                                 )}
                                 {branch.operatingHours && (
                                     <p className="text-[var(--color-text-muted)] text-xs mt-1">
@@ -51,17 +73,8 @@ export default function ContactSection({ branches = [] }: ContactSectionProps) {
                 </div>
             )}
 
-            {/* Contact Button */}
-            <Link
-                href={whatsappLink}
-                target="_blank"
-                className="btn-primary"
-            >
-                Reserve via WhatsApp
-            </Link>
-
             {/* Social Links */}
-            <div className="footer-links mt-8">
+            <div className="footer-links">
                 <Link
                     href="https://www.instagram.com/masera.eg/"
                     target="_blank"

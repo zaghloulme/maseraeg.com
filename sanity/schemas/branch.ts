@@ -48,6 +48,13 @@ export default defineType({
             description: 'e.g., Daily: 8:00 AM - 11:00 PM',
         }),
         defineField({
+            name: 'googleMapsUrl',
+            title: 'Google Maps URL',
+            type: 'url',
+            description: 'Link to Google Maps location',
+            validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }),
+        }),
+        defineField({
             name: 'isActive',
             title: 'Active',
             type: 'boolean',

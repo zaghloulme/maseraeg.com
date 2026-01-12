@@ -16,6 +16,7 @@ export interface Branch {
     phone?: string
     whatsapp?: string
     operatingHours?: string
+    googleMapsUrl?: string
     isActive: boolean
 }
 
@@ -64,6 +65,7 @@ export async function getBranches(): Promise<Branch[]> {
       phone,
       whatsapp,
       operatingHours,
+      googleMapsUrl,
       isActive
     }
   `)

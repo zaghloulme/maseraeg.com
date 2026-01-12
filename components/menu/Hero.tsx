@@ -11,10 +11,12 @@ interface HeroProps {
 export default function Hero({ showPrices = false, branchName }: HeroProps) {
     return (
         <section className="hero-landing">
-            {/* Decorative Elements */}
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 text-[var(--color-gold)] opacity-30 text-sm tracking-[0.3em] uppercase animate-fade-in">
-                Alexandria, Egypt
-            </div>
+            {/* Branch Name - only on branch pages */}
+            {branchName && (
+                <div className="absolute top-8 left-1/2 -translate-x-1/2 text-[var(--color-gold)] opacity-50 text-sm tracking-[0.3em] uppercase animate-fade-in">
+                    {branchName} Branch
+                </div>
+            )}
 
             {/* Main Content */}
             <div className="relative z-10 max-w-3xl mx-auto">
@@ -31,24 +33,13 @@ export default function Hero({ showPrices = false, branchName }: HeroProps) {
                 </div>
 
                 {/* Story Text */}
-                <p className="mt-8 text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed animate-fade-in-up delay-2">
+                <p className="mt-4 text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed animate-fade-in-up delay-2">
                     Where culinary artistry meets cherished moments.
                     Each dish tells a story, each visit becomes a memory.
                 </p>
 
-                {/* Branch Badge (for QR menus) */}
-                {branchName && (
-                    <div className="mt-8 animate-fade-in-up delay-3">
-                        <span className="inline-flex items-center gap-2 text-sm text-[var(--color-gold)] border border-[var(--color-border)] px-4 py-2">
-                            <span>◆</span>
-                            {branchName} Branch
-                            <span>◆</span>
-                        </span>
-                    </div>
-                )}
-
                 {/* CTA Button */}
-                <div className="mt-12 animate-fade-in-up delay-3">
+                <div className="mt-10 animate-fade-in-up delay-3">
                     <Link href="#menu" className="btn-primary">
                         Explore Menu
                     </Link>
