@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface HeroProps {
     showPrices?: boolean
@@ -17,23 +18,20 @@ export default function Hero({ showPrices = false, branchName }: HeroProps) {
 
             {/* Main Content */}
             <div className="relative z-10 max-w-3xl mx-auto">
-                {/* Logo */}
-                <h1 className="title-hero animate-fade-in-up">
-                    Ma Sera
-                </h1>
-
-                {/* Elegant Divider */}
-                <div className="divider animate-fade-in-up delay-1">
-                    <span className="divider-icon">✦</span>
+                {/* Logo Image */}
+                <div className="animate-fade-in-up">
+                    <Image
+                        src="/images/logo.png"
+                        alt="Ma Sera - Every Hour, a New Memory"
+                        width={400}
+                        height={300}
+                        priority
+                        className="mx-auto w-[280px] md:w-[400px] h-auto brightness-0 invert"
+                    />
                 </div>
 
-                {/* Tagline */}
-                <p className="font-display text-xl md:text-2xl text-[var(--color-text-secondary)] italic animate-fade-in-up delay-2">
-                    Every Hour, a New Memory
-                </p>
-
                 {/* Story Text */}
-                <p className="mt-8 text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed animate-fade-in-up delay-3">
+                <p className="mt-8 text-[var(--color-text-muted)] max-w-md mx-auto leading-relaxed animate-fade-in-up delay-2">
                     Where culinary artistry meets cherished moments.
                     Each dish tells a story, each visit becomes a memory.
                 </p>
@@ -50,14 +48,14 @@ export default function Hero({ showPrices = false, branchName }: HeroProps) {
                 )}
 
                 {/* CTA Button */}
-                <div className="mt-12 animate-fade-in-up delay-4">
+                <div className="mt-12 animate-fade-in-up delay-3">
                     <Link href="#menu" className="btn-primary">
                         Explore Menu
                     </Link>
                 </div>
 
                 {/* Price Notice */}
-                <p className="mt-12 text-xs text-[var(--color-text-muted)] tracking-wider uppercase">
+                <p className="mt-12 text-xs text-[var(--color-text-muted)] tracking-wider uppercase animate-fade-in-up delay-4">
                     {showPrices
                         ? 'Prices exclude 14% VAT'
                         : 'Visit us to view our full menu with prices'
