@@ -48,20 +48,21 @@ export default function MenuSection({
                     <div className="accent-line" />
                 </header>
 
-                {/* Menu Items */}
-                <div>
-                    {items.map((item) => (
-                        <MenuItem
-                            key={item._id}
-                            name={item.name}
-                            description={item.description}
-                            image={item.image}
-                            price={item.price}
-                            showPrice={showPrices}
-                            dietaryTags={item.dietaryTags}
-                            isNew={item.isNew}
-                            isPopular={item.isPopular}
-                        />
+                {/* Menu Items - Two column on desktop */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                    {items.map((item, index) => (
+                        <div key={item._id} style={{ animationDelay: `${index * 0.1}s` }}>
+                            <MenuItem
+                                name={item.name}
+                                description={item.description}
+                                image={item.image}
+                                price={item.price}
+                                showPrice={showPrices}
+                                dietaryTags={item.dietaryTags}
+                                isNew={item.isNew}
+                                isPopular={item.isPopular}
+                            />
+                        </div>
                     ))}
                 </div>
             </div>
