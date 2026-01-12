@@ -54,9 +54,8 @@ export default function Hero({ showPrices = false, branchName }: HeroProps) {
                 </p>
             </div>
 
-            {/* Scroll Indicator */}
             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-float opacity-40">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
             </div>

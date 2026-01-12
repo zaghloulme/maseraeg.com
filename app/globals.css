@@ -21,7 +21,8 @@
   /* Text Colors */
   --color-text-primary: #f8f5f0;
   --color-text-secondary: #c9c4bb;
-  --color-text-muted: #8b8680;
+  --color-text-muted: #a09a94;
+  /* Improved contrast (4.5:1) */
 
   /* Accent - Warm Gold */
   --color-gold: #c9a961;

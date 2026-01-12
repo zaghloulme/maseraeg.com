@@ -35,11 +35,12 @@ export default function MenuSection({
         <section
             id={`category-${id}`}
             className="menu-section"
+            aria-labelledby={`heading-${id}`}
         >
             <div className="container-narrow">
                 {/* Category Header */}
                 <header className="category-header">
-                    <h2 className="title-category">{title}</h2>
+                    <h2 id={`heading-${id}`} className="title-category">{title}</h2>
                     {description && (
                         <p className="text-[var(--color-text-muted)] mt-2 text-sm italic">
                             {description}

@@ -65,6 +65,12 @@ export default function RootLayout({
         <html lang="en" dir="ltr" className={`${inter.variable} ${playfair.variable} ${greatVibes.variable}`}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
             <body className={inter.className}>
+                <a
+                    href="#menu"
+                    className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[10000] focus:bg-[var(--color-gold)] focus:text-[#1c3149] focus:px-6 focus:py-3 focus:rounded-md focus:font-bold focus:shadow-xl transition-all"
+                >
+                    Skip to Menu
+                </a>
                 <PageLoader />
                 {gtmId && (
                     <Suspense fallback={null}>
