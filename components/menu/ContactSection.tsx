@@ -58,20 +58,28 @@ export default function ContactSection({ branches = [] }: ContactSectionProps) {
                                     <>
                                         <p className="text-[var(--color-cream)] font-medium">{branch.name}</p>
                                         {branch.address && (
-                                            <p className="text-[var(--color-text-muted)}">{branch.address}</p>
+                                            <p className="text-[var(--color-text-muted)]">{branch.address}</p>
                                         )}
                                     </>
                                 )}
+                                {branch.phone && (
+                                    <div className="mt-2 text-[var(--color-text-muted)]">
+                                        <p className="text-[var(--color-gold)] text-xs uppercase tracking-wider mb-0.5">Contact Us</p>
+                                        <p>{branch.phone}</p>
+                                    </div>
+                                )}
                                 {branch.operatingHours && (
-                                    <p className="text-[var(--color-text-muted)] text-xs mt-1">
-                                        {branch.operatingHours}
-                                    </p>
+                                    <div className="mt-2 text-[var(--color-text-muted)]">
+                                        <p className="text-[var(--color-gold)] text-xs uppercase tracking-wider mb-0.5">Working Hours</p>
+                                        <p>{branch.operatingHours}</p>
+                                    </div>
                                 )}
                             </div>
                         ))}
                     </div>
                 </div>
-            )}
+            )
+            }
 
             {/* Social Links */}
             <div className="footer-links">
@@ -102,6 +110,6 @@ export default function ContactSection({ branches = [] }: ContactSectionProps) {
             <p className="footer-copyright">
                 © {new Date().getFullYear()} Ma Sera. All rights reserved.
             </p>
-        </footer>
+        </footer >
     )
 }
