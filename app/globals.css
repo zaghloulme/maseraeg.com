@@ -739,42 +739,35 @@ h4 {
 
 /* Content animations wait for loader to complete */
 body.loading .animate-fade-in,
-body.loading .animate-fade-in-up,
-body.loading .animate-float {
-  animation: none;
+body.loading .animate-fade-in-up {
+  animation-play-state: paused;
   opacity: 0;
 }
 
 body.loaded .animate-fade-in {
-  animation: fadeIn 1s ease-out forwards;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 body.loaded .animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
-body.loaded .animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Hero section entrance after loader */
+/* Hero is visible behind curtains, subtle entrance when revealed */
 body.loading .hero-landing {
-  opacity: 0;
-  transform: scale(0.95);
+  opacity: 1;
+  transform: scale(1.02);
 }
 
 body.loaded .hero-landing {
-  animation: heroReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: heroEnter 0.6s ease-out forwards;
 }
 
-@keyframes heroReveal {
+@keyframes heroEnter {
   0% {
-    opacity: 0;
-    transform: scale(0.95);
+    transform: scale(1.02);
   }
 
   100% {
-    opacity: 1;
     transform: scale(1);
   }
 }
