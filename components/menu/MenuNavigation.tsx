@@ -29,7 +29,7 @@ export default function MenuNavigation({
         // Scroll to section
         const element = document.getElementById(`category-${slug}`)
         if (element) {
-            const offset = 120 // Account for sticky nav
+            const offset = 100
             const top = element.getBoundingClientRect().top + window.scrollY - offset
             window.scrollTo({ top, behavior: 'smooth' })
         }
@@ -38,23 +38,20 @@ export default function MenuNavigation({
     return (
         <nav
             ref={navRef}
-            className="sticky top-0 z-40 bg-[var(--masera-slate)]/95 backdrop-blur-md border-b border-[var(--glass-border)] py-4"
+            id="menu"
+            className="category-nav sticky top-0 z-40"
         >
-            <div className="container">
-                <div className="category-nav">
-                    {categories.map((category) => (
-                        <button
-                            key={category._id}
-                            onClick={() => handleClick(category.slug.current)}
-                            className={`category-pill ${activeCategory === category.slug.current ? 'active' : ''
-                                }`}
-                            aria-current={activeCategory === category.slug.current ? 'true' : undefined}
-                        >
-                            {category.name}
-                        </button>
-                    ))}
-                </div>
-            </div>
+            {categories.map((category) => (
+                <button
+                    key={category._id}
+                    onClick={() => handleClick(category.slug.current)}
+                    className={`category-nav-item ${activeCategory === category.slug.current ? 'active' : ''
+                        }`}
+                    aria-current={activeCategory === category.slug.current ? 'true' : undefined}
+                >
+                    {category.name}
+                </button>
+            ))}
         </nav>
     )
 }

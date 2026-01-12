@@ -4,6 +4,7 @@
  */
 
 import { Metadata } from 'next'
+import Link from 'next/link'
 import { Hero, MenuNavigation, MenuSection, ContactSection } from '@/components/menu'
 import {
   getBranches,
@@ -69,12 +70,12 @@ export default async function MenuPage() {
             <p className="text-xl text-[var(--muted)]">
               Menu coming soon. Please add items in Sanity Studio.
             </p>
-            <a
+            <Link
               href="/studio"
               className="btn-primary inline-block mt-6"
             >
               Open Sanity Studio
-            </a>
+            </Link>
           </div>
         </section>
       )}
