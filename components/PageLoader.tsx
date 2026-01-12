@@ -45,15 +45,15 @@ export default function PageLoader() {
             className={`page-loader ${isLoading ? 'loading' : 'loaded'}`}
             aria-hidden="true"
         >
-            {/* Logo pulse */}
+            {/* Logo - matches hero logo size and position */}
             <div className="loader-logo">
                 <Image
                     src="/images/logo.png"
                     alt=""
-                    width={200}
-                    height={150}
+                    width={400}
+                    height={300}
                     priority
-                    className="brightness-0 invert"
+                    className="w-[280px] md:w-[400px] h-auto brightness-0 invert"
                 />
             </div>
 
