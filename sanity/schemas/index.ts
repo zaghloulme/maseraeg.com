@@ -3,7 +3,8 @@ import siteSettings from './siteSettings'
 import policy from './policy'
 
 import hero from './hero'
-import features from './features'
+import features, { featureItem } from './features'
+import seo from './seo'
 
 // Menu schemas
 import branch from './branch'
@@ -15,6 +16,8 @@ export const schemaTypes = [
     siteSettings,
     hero,
     features,
+    featureItem,
+    seo,
     homepage,
     policy,
     // Menu
