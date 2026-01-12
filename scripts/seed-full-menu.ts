@@ -245,11 +245,8 @@ async function seed() {
             console.log(`   ✓ ${catName}`)
         }
 
-        // 3. Menu Items
-        console.log(`\n🍽️ Seeding Menu Items...`)
-
-        // Process items
-        // If price has split, create variants
+        // Seed Menu Items
+        console.log('🍽️ Seeding Menu Items...')
         let itemDisplayOrder = 1
 
         // We must generate unique IDs for items to avoid collision if run multiple times
@@ -261,7 +258,7 @@ async function seed() {
             const baseSlug = slugify(item.name)
 
             const priceStr = String(item.price)
-            let itemsToCreate = []
+            const itemsToCreate = []
 
             // Heuristic for split prices
             if (priceStr.includes('/')) {

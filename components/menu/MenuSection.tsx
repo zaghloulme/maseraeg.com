@@ -40,7 +40,13 @@ export default function MenuSection({
             <div className="container-narrow">
                 {/* Category Header */}
                 <header className="category-header">
-                    <h2 id={`heading-${id}`} className="title-category">{title}</h2>
+                    <h2
+                        id={`heading-${id}`}
+                        className="title-category focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded px-2 -mx-2"
+                        tabIndex={0}
+                    >
+                        {title}
+                    </h2>
                     {description && (
                         <p className="text-[var(--color-text-muted)] mt-2 text-sm italic">
                             {description}

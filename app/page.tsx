@@ -14,6 +14,7 @@ import {
     transformMenuItemsForDisplay,
     groupItemsByCategory,
     type HeroSection as HeroSectionType,
+    type FeaturesSection as FeaturesSectionType,
 } from '@/lib/menu'
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ export default async function MenuPage() {
 
             {/* Content Sections from Sanity */}
             {featureSections.map((section, idx) => (
-                <Features key={idx} data={section as any} />
+                <Features key={idx} data={section as FeaturesSectionType} />
             ))}
 
             {/* Category Navigation */}

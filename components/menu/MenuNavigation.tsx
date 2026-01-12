@@ -20,52 +20,63 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
 
     const getSlug = (cat: Category) => cat.slug?.current || cat.name.toLowerCase().replace(/\s+/g, '-')
 
-    // Track which section is in view
+    // Track which section is in view using IntersectionObserver
     useEffect(() => {
-        const handleScroll = () => {
-            // Find visible section
-            let current = ''
-            const sections = categories.map(cat => ({
-                id: getSlug(cat),
-                element: document.getElementById(`category-${getSlug(cat)}`),
-                cat
-            }))
+        const observer = new IntersectionObserver(
+            (entries) => {
+                // Find the visible section with highest intersection ratio or simply the first one
+                const visibleSection = entries.find((entry) => entry.isIntersecting)
 
-            const scrollPosition = window.scrollY + 200
+                if (visibleSection) {
+                    const slug = visibleSection.target.id.replace('category-', '')
+                    setActiveCategory(slug)
 
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = sections[i]
-                if (section.element && section.element.offsetTop <= scrollPosition) {
-                    current = section.id
-                    // Auto-switch tab if scrolling into new type
-                    const type = section.cat.type || 'food'
-                    if (type !== activeType) {
-                        // We use a functional update or just check ref to avoid dependency loops if needed
-                        // But here we want the UI to switch.
-                        // However, we only want to switch if the USER scrolled, not if we just clicked.
-                        // For simplicity, we just sync.
-                        setActiveType(type as 'food' | 'drink')
+                    // Sync active type purely based on the active category
+                    // We find the category object to check its type
+                    const currentCat = categories.find(c => getSlug(c) === slug)
+                    if (currentCat) {
+                        const type = currentCat.type || 'food'
+                        setActiveType(prev => {
+                            // Only update if different to avoid excess re-renders
+                            if (prev !== type) return type as 'food' | 'drink'
+                            return prev
+                        })
                     }
-                    break
                 }
+            },
+            {
+                // Offset to match the sticky header height (roughly 80px)
+                // rootMargin top negative value makes the 'active' area start below the header
+                rootMargin: '-100px 0px -60% 0px',
+                threshold: 0
             }
-            if (current) setActiveCategory(current)
-        }
+        )
 
-        window.addEventListener('scroll', handleScroll)
-        handleScroll()
+        categories.forEach((cat) => {
+            const el = document.getElementById(`category-${getSlug(cat)}`)
+            if (el) observer.observe(el)
+        })
 
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [categories, activeType]) // Added activeType dependency to ensure state is fresh
+        return () => observer.disconnect()
+    }, [categories])
 
     const scrollContainerRef = useRef<HTMLDivElement>(null)
 
     // Scroll active category pill into view
     useEffect(() => {
         if (activeCategory && scrollContainerRef.current) {
-            const activeBtn = scrollContainerRef.current.querySelector<HTMLButtonElement>(`button[data-slug="${activeCategory}"]`)
+            const container = scrollContainerRef.current
+            const activeBtn = container.querySelector<HTMLButtonElement>(`button[data-slug="${activeCategory}"]`)
+
             if (activeBtn) {
-                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+                // Manual calculation to center the button in the container
+                // This avoids using .scrollIntoView() which can interfere with the main page scroll
+                const left = activeBtn.offsetLeft - (container.offsetWidth / 2) + (activeBtn.offsetWidth / 2)
+
+                container.scrollTo({
+                    left,
+                    behavior: 'smooth'
+                })
             }
         }
     }, [activeCategory])

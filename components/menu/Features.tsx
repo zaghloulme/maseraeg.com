@@ -22,7 +22,7 @@ export default function Features({ data }: FeaturesProps) {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
                     {data.items.map((item, idx) => {
                         // Dynamic icon lookup from Lucide
-                        const IconComponent = item.icon ? (Icons as any)[item.icon] : null
+                        const IconComponent = item.icon ? (Icons as unknown as Record<string, React.ElementType>)[item.icon] : null
 
                         return (
                             <div

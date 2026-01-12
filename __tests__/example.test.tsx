@@ -3,10 +3,17 @@
  * Tests for utility functions and components
  */
 
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeAll } from 'vitest'
 import { render } from '@testing-library/react'
 import MenuPage from '../app/page'
 
+// Mock sanity env BEFORE imports or use module mock
+vi.mock('../sanity/env', () => ({
+  apiVersion: '2024-01-01',
+  dataset: 'test',
+  projectId: 'test',
+  useCdn: false,
+}))
 // Mock the menu queries
 vi.mock('../lib/menu', () => ({
   getBranches: vi.fn().mockResolvedValue([]),
@@ -14,9 +21,15 @@ vi.mock('../lib/menu', () => ({
   getMenuItems: vi.fn().mockResolvedValue([]),
   transformMenuItemsForDisplay: vi.fn().mockReturnValue([]),
   groupItemsByCategory: vi.fn().mockReturnValue([]),
+  getHomepage: vi.fn().mockResolvedValue({ sections: [] }),
 }))
 
 describe('Menu Page', () => {
+  beforeAll(() => {
+    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test'
+    process.env.NEXT_PUBLIC_SANITY_DATASET = 'test'
+  })
+
   it('renders the hero section with logo', async () => {
     const jsx = await MenuPage()
     const { getByAltText } = render(jsx)

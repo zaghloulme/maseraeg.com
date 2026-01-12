@@ -92,7 +92,7 @@ async function fill() {
 
     // Fetch category map for fallback logic
     const categoryDocs = await client.fetch(`*[_type == "menuCategory"]{ _id, name }`)
-    const catMap = new Map(categoryDocs.map((c: any) => [c._id, c.name]))
+    const catMap = new Map(categoryDocs.map((c: { _id: string, name: string }) => [c._id, c.name]))
 
     let updated = 0
     for (const item of allItems) {
