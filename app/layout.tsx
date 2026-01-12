@@ -9,6 +9,7 @@ import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import { PageViewTracker } from '@/components/PageViewTracker'
 import CookieConsent from '@/components/CookieConsent'
 import { VisualEditing } from '@/components/VisualEditing'
+import PageLoader from '@/components/PageLoader'
 import { Metadata } from 'next'
 import './globals.css'
 
@@ -64,6 +65,7 @@ export default function RootLayout({
         <html lang="en" dir="ltr" className={`${inter.variable} ${playfair.variable} ${greatVibes.variable}`}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
             <body className={inter.className}>
+                <PageLoader />
                 {gtmId && (
                     <Suspense fallback={null}>
                         <PageViewTracker />
