@@ -13,10 +13,10 @@
    ======================================== */
 :root {
   /* Core Palette - Deep, rich, sophisticated */
-  --color-bg-primary: #1a1e23;
-  --color-bg-secondary: #232830;
-  --color-bg-card: #2a2f38;
-  --color-bg-elevated: #343a45;
+  --color-bg-primary: #233b59;
+  --color-bg-secondary: #1c3149;
+  --color-bg-card: #2a4a6a;
+  --color-bg-elevated: #345575;
 
   /* Text Colors */
   --color-text-primary: #f8f5f0;
