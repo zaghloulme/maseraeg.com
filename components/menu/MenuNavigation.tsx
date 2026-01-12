@@ -40,6 +40,24 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [categories])
 
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+    // Scroll active category into view
+    useEffect(() => {
+        if (activeCategory && scrollContainerRef.current) {
+            const activeBtn = scrollContainerRef.current.querySelector<HTMLButtonElement>(`button[data-slug="${activeCategory}"]`)
+            if (activeBtn) {
+                const container = scrollContainerRef.current
+                const scrollLeft = activeBtn.offsetLeft - (container.offsetWidth / 2) + (activeBtn.offsetWidth / 2)
+
+                container.scrollTo({
+                    left: scrollLeft,
+                    behavior: 'smooth'
+                })
+            }
+        }
+    }, [activeCategory])
+
     const handleClick = (slug: string) => {
         const element = document.getElementById(`category-${slug}`)
         if (element) {
@@ -55,17 +73,21 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
             id="menu"
             className="sticky top-0 z-40 bg-[#1c3149]/95 backdrop-blur-md border-b border-[var(--color-border)] py-3"
         >
-            <div className="container-wide overflow-x-auto">
-                <div className="flex justify-center gap-2 min-w-max px-4">
+            <div
+                ref={scrollContainerRef}
+                className="container-wide overflow-x-auto scrollbar-hide"
+            >
+                <div className="flex justify-start md:justify-center gap-2 min-w-max px-4">
                     {categories.map((category) => {
                         const isActive = activeCategory === category.slug.current
                         return (
                             <button
                                 key={category._id}
+                                data-slug={category.slug.current}
                                 onClick={() => handleClick(category.slug.current)}
                                 className={`
                   px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200
-                  font-serif tracking-wide
+                  font-serif tracking-wide whitespace-nowrap
                   ${isActive
                                         ? 'bg-[var(--color-gold)] text-[#1c3149] shadow-lg'
                                         : 'text-[var(--color-text-secondary)] hover:text-[var(--color-cream)] hover:bg-white/10'
