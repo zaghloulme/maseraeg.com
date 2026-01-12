@@ -85,7 +85,7 @@ export default async function BranchMenuPage({ params }: PageProps) {
             {groupedMenu.map(({ category, items }) => (
                 <MenuSection
                     key={category._id}
-                    id={category.slug.current}
+                    id={category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')}
                     title={category.name}
                     description={category.description}
                     items={items}

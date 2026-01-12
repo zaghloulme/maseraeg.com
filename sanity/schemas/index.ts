@@ -1,6 +1,5 @@
 import homepage from './homepage'
 import siteSettings from './siteSettings'
-import policy from './policy'
 
 import hero from './hero'
 import features, { featureItem } from './features'
@@ -19,7 +18,6 @@ export const schemaTypes = [
     featureItem,
     seo,
     homepage,
-    policy,
     // Menu
     branch,
     menuCategory,

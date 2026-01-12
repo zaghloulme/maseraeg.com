@@ -23,8 +23,7 @@ export interface Branch {
 export interface MenuCategory {
     _id: string
     name: string
-    nameAr?: string
-    slug: { current: string }
+    slug?: { current: string }
     description?: string
     image?: unknown
     displayOrder: number
@@ -34,13 +33,12 @@ export interface MenuCategory {
 export interface MenuItem {
     _id: string
     name: string
-    nameAr?: string
     description?: string
-    descriptionAr?: string
     image?: unknown
     category: {
         _id: string
-        slug: { current: string }
+        name?: string
+        slug?: { current: string }
     }
     branchPricing?: Array<{
         branch: { _id: string; slug: { current: string } }
@@ -91,7 +89,6 @@ export async function getMenuCategories(): Promise<MenuCategory[]> {
     *[_type == "menuCategory" && isActive == true] | order(displayOrder asc) {
       _id,
       name,
-      nameAr,
       slug,
       description,
       image,
@@ -106,12 +103,11 @@ export async function getMenuItems(): Promise<MenuItem[]> {
     *[_type == "menuItem" && isActive == true] | order(displayOrder asc) {
       _id,
       name,
-      nameAr,
       description,
-      descriptionAr,
       image,
       category->{
         _id,
+        name,
         slug
       },
       branchPricing[]{
@@ -138,9 +134,7 @@ export function transformMenuItemsForDisplay(
 ): Array<{
     _id: string
     name: string
-    nameAr?: string
     description?: string
-    descriptionAr?: string
     image?: { url: string; alt?: string }
     categorySlug: string
     price?: number
@@ -166,16 +160,14 @@ export function transformMenuItemsForDisplay(
         return {
             _id: item._id,
             name: item.name,
-            nameAr: item.nameAr,
             description: item.description,
-            descriptionAr: item.descriptionAr,
             image: item.image
                 ? {
                     url: urlFor(item.image).width(600).height(450).url(),
                     alt: item.name,
                 }
                 : undefined,
-            categorySlug: item.category?.slug?.current || '',
+            categorySlug: item.category?.slug?.current || item.category?.name?.toLowerCase().replace(/\s+/g, '-') || '',
             price,
             dietaryTags: item.dietaryTags,
             isNew: item.isNew,
@@ -194,11 +186,14 @@ export function groupItemsByCategory(
     items: typeof items
 }> {
     return categories
-        .map((category) => ({
-            category,
-            items: items.filter(
-                (item) => item.categorySlug === category.slug.current && item.isAvailable
-            ),
-        }))
+        .map((category) => {
+            const catSlug = category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')
+            return {
+                category,
+                items: items.filter(
+                    (item) => item.categorySlug === catSlug && item.isAvailable
+                ),
+            }
+        })
         .filter((group) => group.items.length > 0)
 }

@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from 'react'
 interface Category {
     _id: string
     name: string
-    slug: { current: string }
+    slug?: { current: string }
 }
 
 interface MenuNavigationProps {
@@ -16,11 +16,13 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
     const navRef = useRef<HTMLDivElement>(null)
     const [activeCategory, setActiveCategory] = useState<string>('')
 
+    const getSlug = (cat: Category) => cat.slug?.current || cat.name.toLowerCase().replace(/\s+/g, '-')
+
     // Track which section is in view
     useEffect(() => {
         const handleScroll = () => {
             const sections = categories.map(cat =>
-                document.getElementById(`category-${cat.slug.current}`)
+                document.getElementById(`category-${getSlug(cat)}`)
             )
 
             const scrollPosition = window.scrollY + 200 // Offset for navbar height
@@ -28,7 +30,7 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
             for (let i = sections.length - 1; i >= 0; i--) {
                 const section = sections[i]
                 if (section && section.offsetTop <= scrollPosition) {
-                    setActiveCategory(categories[i].slug.current)
+                    setActiveCategory(getSlug(categories[i]))
                     break
                 }
             }
@@ -79,12 +81,13 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
             >
                 <div className="flex justify-start md:justify-center gap-2 min-w-max px-4">
                     {categories.map((category) => {
-                        const isActive = activeCategory === category.slug.current
+                        const slug = getSlug(category)
+                        const isActive = activeCategory === slug
                         return (
                             <button
                                 key={category._id}
-                                data-slug={category.slug.current}
-                                onClick={() => handleClick(category.slug.current)}
+                                data-slug={slug}
+                                onClick={() => handleClick(slug)}
                                 className={`
                   px-5 py-3 rounded-lg font-medium text-sm transition-all duration-200
                   font-serif tracking-wide whitespace-nowrap min-h-[44px] flex items-center

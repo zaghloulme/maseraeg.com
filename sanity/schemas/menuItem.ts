@@ -14,22 +14,11 @@ export default defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
-            name: 'nameAr',
-            title: 'Item Name (Arabic)',
-            type: 'string',
-        }),
-        defineField({
             name: 'description',
             title: 'Description',
             type: 'text',
             rows: 3,
             description: 'Ingredients and preparation details',
-        }),
-        defineField({
-            name: 'descriptionAr',
-            title: 'Description (Arabic)',
-            type: 'text',
-            rows: 3,
         }),
         defineField({
             name: 'category',

@@ -14,22 +14,6 @@ export default defineType({
             validation: (Rule) => Rule.required(),
         }),
         defineField({
-            name: 'nameAr',
-            title: 'Category Name (Arabic)',
-            type: 'string',
-            description: 'Arabic translation of the category name',
-        }),
-        defineField({
-            name: 'slug',
-            title: 'URL Slug',
-            type: 'slug',
-            options: {
-                source: 'name',
-                maxLength: 50,
-            },
-            validation: (Rule) => Rule.required(),
-        }),
-        defineField({
             name: 'description',
             title: 'Description',
             type: 'text',
