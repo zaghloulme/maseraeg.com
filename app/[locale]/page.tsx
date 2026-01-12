@@ -56,7 +56,6 @@ export default async function MenuPage() {
           key={category._id}
           id={category.slug.current}
           title={category.name}
-          titleAr={category.nameAr}
           description={category.description}
           items={items}
           showPrices={false}
