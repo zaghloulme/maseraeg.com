@@ -40,25 +40,25 @@ export default function ContactSection({ branches = [] }: ContactSectionProps) {
                         {branches.map((branch, index) => (
                             <div key={index} className="text-sm">
                                 {branch.googleMapsUrl ? (
-                                    <Link
-                                        href={branch.googleMapsUrl}
-                                        target="_blank"
-                                        className="group"
-                                    >
-                                        <p className="text-[var(--color-cream)] font-medium group-hover:text-[var(--color-gold)] transition-colors">
+                                    <>
+                                        <Link
+                                            href={branch.googleMapsUrl}
+                                            target="_blank"
+                                            className="text-[var(--color-cream)] font-medium hover:text-[var(--color-gold)] transition-colors"
+                                        >
                                             {branch.name} ↗
-                                        </p>
+                                        </Link>
                                         {branch.address && (
-                                            <p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text-secondary)] transition-colors">
+                                            <p className="text-[var(--color-text-muted)]">
                                                 {branch.address}
                                             </p>
                                         )}
-                                    </Link>
+                                    </>
                                 ) : (
                                     <>
                                         <p className="text-[var(--color-cream)] font-medium">{branch.name}</p>
                                         {branch.address && (
-                                            <p className="text-[var(--color-text-muted)]">{branch.address}</p>
+                                            <p className="text-[var(--color-text-muted)}">{branch.address}</p>
                                         )}
                                     </>
                                 )}
