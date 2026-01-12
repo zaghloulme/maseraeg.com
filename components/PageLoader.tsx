@@ -53,7 +53,8 @@ export default function PageLoader() {
                     width={400}
                     height={300}
                     priority
-                    className="w-[280px] md:w-[400px] h-auto brightness-0 invert"
+                    className="w-[280px] md:w-[400px] brightness-0 invert"
+                    style={{ height: 'auto' }}
                 />
             </div>
 

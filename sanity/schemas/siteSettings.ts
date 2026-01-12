@@ -40,7 +40,27 @@ export default defineType({
       type: 'object',
       fields: [
         { name: 'facebook', type: 'url', title: 'Facebook URL' },
-        { name: 'instagram', type: 'url', title: 'Instagram URL' }
+        { name: 'instagram', type: 'url', title: 'Instagram URL' },
+        { name: 'tiktok', type: 'url', title: 'TikTok URL' },
+        { name: 'talabat', type: 'url', title: 'Talabat URL' }
+      ]
+    }),
+    defineField({
+      name: 'contactInfo',
+      title: 'Global Contact Info',
+      type: 'object',
+      fields: [
+        {
+          name: 'phoneNumbers',
+          type: 'array',
+          of: [{ type: 'string' }],
+          title: 'Phone Numbers (Footer)'
+        },
+        {
+          name: 'workingHours',
+          type: 'string',
+          title: 'Working Hours Text'
+        }
       ]
     }),
     defineField({

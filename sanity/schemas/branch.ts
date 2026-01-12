@@ -52,7 +52,6 @@ export default defineType({
             title: 'Google Maps URL',
             type: 'url',
             description: 'Link to Google Maps location',
-            validation: (Rule) => Rule.uri({ scheme: ['http', 'https'] }),
         }),
         defineField({
             name: 'isActive',

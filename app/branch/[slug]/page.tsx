@@ -11,6 +11,7 @@ import {
     getBranchBySlug,
     getMenuCategories,
     getMenuItems,
+    getSiteSettings,
     transformMenuItemsForDisplay,
     groupItemsByCategory,
 } from '@/lib/menu'
@@ -59,10 +60,11 @@ export default async function BranchMenuPage({ params }: PageProps) {
     }
 
     // Fetch menu data
-    const [branches, categories, menuItems] = await Promise.all([
+    const [branches, categories, menuItems, siteSettings] = await Promise.all([
         getBranches(),
         getMenuCategories(),
         getMenuItems(),
+        getSiteSettings(),
     ])
 
     // Transform items for this branch (includes prices)
@@ -105,7 +107,7 @@ export default async function BranchMenuPage({ params }: PageProps) {
             )}
 
             {/* Contact Footer */}
-            <ContactSection branches={branches} />
+            <ContactSection branches={branches} siteSettings={siteSettings} />
         </main>
     )
 }

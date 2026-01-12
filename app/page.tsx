@@ -11,6 +11,7 @@ import {
     getMenuCategories,
     getMenuItems,
     getHomepage,
+    getSiteSettings,
     transformMenuItemsForDisplay,
     groupItemsByCategory,
     type HeroSection as HeroSectionType,
@@ -18,40 +19,34 @@ import {
 } from '@/lib/menu'
 
 export const metadata: Metadata = {
-    title: 'Ma Sera - Menu | Every Hour, a New Memory',
-    description: 'Explore our delicious menu at Ma Sera Egypt. Premium breakfast, brunch, and café cuisine in Alexandria. Fresh ingredients, artisan recipes.',
-    openGraph: {
-        title: 'Ma Sera - Menu | Every Hour, a New Memory',
-        description: 'Explore our delicious menu at Ma Sera Egypt. Premium breakfast, brunch, and café cuisine in Alexandria.',
-        type: 'website',
-        locale: 'en_EG',
-        siteName: 'Ma Sera Egypt',
-    },
+    title: 'Ma Sera | Menu',
+    description: 'Explore our latest menu and offers',
 }
 
 export default async function MenuPage() {
-    // Fetch data from Sanity
-    const [branches, categories, menuItems, homepage] = await Promise.all([
-        getBranches(),
+    // 1. Fetch all data in parallel
+    const [categories, items, branches, homepage, siteSettings] = await Promise.all([
         getMenuCategories(),
         getMenuItems(),
+        getBranches(),
         getHomepage(),
+        getSiteSettings(),
     ])
 
-    // Extract sections
-    const heroSection = homepage?.sections?.find((s) => s._type === 'hero') as HeroSectionType | undefined
-    const featureSections = homepage?.sections?.filter((s) => s._type === 'features') || []
+    // 2. Transform items
+    const transformedItems = transformMenuItemsForDisplay(items)
 
-    // Transform items for display (no branch slug = no prices)
-    const displayItems = transformMenuItemsForDisplay(menuItems)
+    // 3. Group by category
+    const menuGroups = groupItemsByCategory(transformedItems, categories)
 
-    // Group by category
-    const groupedMenu = groupItemsByCategory(displayItems, categories)
+    // 4. Extract data sections
+    const heroSection = homepage?.sections?.find(s => s._type === 'hero')
+    const featureSections = homepage?.sections?.filter(s => s._type === 'features') || []
 
     return (
-        <main className="min-h-screen">
-            {/* Hero with Sanity data */}
-            <Hero showPrices={false} data={heroSection} />
+        <main className="min-h-screen pb-20">
+            {/* Hero Section from Sanity */}
+            <Hero data={heroSection as HeroSectionType} />
 
             {/* Content Sections from Sanity */}
             {featureSections.map((section, idx) => (
@@ -59,24 +54,24 @@ export default async function MenuPage() {
             ))}
 
             {/* Category Navigation */}
-            {categories.length > 0 && (
-                <MenuNavigation categories={categories} />
-            )}
+            <MenuNavigation categories={categories} />
 
             {/* Menu Sections */}
-            {groupedMenu.map(({ category, items }) => (
-                <MenuSection
-                    key={category._id}
-                    id={category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')}
-                    title={category.name}
-                    description={category.description}
-                    items={items}
-                    showPrices={false}
-                />
-            ))}
+            <div className="py-8 space-y-2">
+                {menuGroups.map((group) => (
+                    <MenuSection
+                        key={group.category._id}
+                        id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
+                        title={group.category.name}
+                        description={group.category.description}
+                        items={group.items}
+                        showPrices={false}
+                    />
+                ))}
+            </div>
 
             {/* Empty State */}
-            {groupedMenu.length === 0 && (
+            {menuGroups.length === 0 && (
                 <section className="py-20 text-center">
                     <div className="container-narrow">
                         <p className="text-xl text-[var(--color-text-muted)]">
@@ -92,8 +87,17 @@ export default async function MenuPage() {
                 </section>
             )}
 
+            {/* VAT Notice */}
+            {menuGroups.length > 0 && (
+                <div className="text-center py-8 border-t border-[var(--color-border-subtle)]">
+                    <p className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">
+                        All Prices exclude 14% VAT
+                    </p>
+                </div>
+            )}
+
             {/* Contact Footer */}
-            <ContactSection branches={branches} />
+            <ContactSection branches={branches} siteSettings={siteSettings} />
         </main>
     )
 }

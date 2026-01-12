@@ -49,7 +49,8 @@ export default function Hero({ showPrices = false, branchName, data }: HeroProps
                             width={400}
                             height={300}
                             priority
-                            className="mx-auto w-[280px] md:w-[400px] h-auto brightness-0 invert"
+                            className="mx-auto w-[280px] md:w-[400px] brightness-0 invert"
+                            style={{ height: 'auto' }}
                         />
                     )}
                 </div>

@@ -83,7 +83,27 @@ export interface HomepageData {
   sections?: HomepageSection[]
 }
 
+// Site Settings Types
+export interface SiteSettings {
+  socialLinks?: {
+    facebook?: string
+    instagram?: string
+    tiktok?: string
+    talabat?: string
+  }
+  contactInfo?: {
+    phoneNumbers?: string[]
+    workingHours?: string
+  }
+}
+
 // Queries
+export async function getSiteSettings(): Promise<SiteSettings> {
+  return client.fetch(`*[_type == "siteSettings"][0]{
+    socialLinks,
+    contactInfo
+  }`)
+}
 export async function getHomepage(): Promise<HomepageData> {
   return client.fetch(`
     *[_type == "homepage"][0] {

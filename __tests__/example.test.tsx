@@ -22,12 +22,25 @@ vi.mock('../lib/menu', () => ({
   transformMenuItemsForDisplay: vi.fn().mockReturnValue([]),
   groupItemsByCategory: vi.fn().mockReturnValue([]),
   getHomepage: vi.fn().mockResolvedValue({ sections: [] }),
+  getSiteSettings: vi.fn().mockResolvedValue({}),
 }))
 
 describe('Menu Page', () => {
   beforeAll(() => {
     process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = 'test'
     process.env.NEXT_PUBLIC_SANITY_DATASET = 'test'
+
+    // Mock IntersectionObserver for MenuNavigation
+    vi.stubGlobal('IntersectionObserver', class {
+      observe = vi.fn()
+      disconnect = vi.fn()
+      unobserve = vi.fn()
+    })
+
+    // Mock window.scrollTo
+    window.scrollTo = vi.fn()
+    // Mock Element.prototype.scrollTo
+    Element.prototype.scrollTo = vi.fn()
   })
 
   it('renders the hero section with logo', async () => {
