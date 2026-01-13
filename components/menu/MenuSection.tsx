@@ -78,17 +78,14 @@ export default function MenuSection({
 
                 {/* Menu Items */}
                 {scrollable ? (
-                    <div className={`flex overflow-x-auto pb-8 -mx-4 px-4 snap-x gap-4 md:gap-6 md:overflow-visible md:pb-0 scrollbar-hide ${items.length < 4
-                        ? "md:flex md:justify-center md:flex-wrap"
-                        : "md:grid md:grid-cols-4" // Use grid for 4+ items
+                    <div className={`flex overflow-x-auto pb-8 -mx-4 px-4 snap-x gap-4 md:gap-6 scrollbar-hide ${items.length < 4
+                        ? "md:justify-center md:flex-wrap md:overflow-visible md:pb-0" // Center, wrap, no scroll needed
+                        : "md:justify-start md:flex-nowrap md:overflow-x-auto md:pb-8" // Scroll enabled on desktop
                         }`}>
                         {items.map((item, index) => (
                             <div
                                 key={item._id}
-                                className={`min-w-[280px] w-[85vw] snap-center ${items.length < 4
-                                    ? "md:w-[280px] lg:w-[320px]" // Fixed width for centered flex
-                                    : "md:min-w-0 md:w-auto" // Auto width for grid
-                                    }`}
+                                className={`min-w-[280px] w-[85vw] snap-center shrink-0 md:w-[280px] lg:w-[320px]`}
                                 style={{ animationDelay: `${index * 0.1}s` }}
                             >
                                 <MenuItem
