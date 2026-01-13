@@ -279,9 +279,13 @@ export function groupItemsByCategory(
   category: Omit<MenuCategory, 'image'> & { image?: { url: string; alt?: string } }
   items: typeof items
 }> {
-  return categories
+  // Helper to safely get category slug
+  const getCatSlug = (c: MenuCategory) => c.slug?.current || c.name.toLowerCase().replace(/\s+/g, '-')
+
+  // 1. Map existing categories
+  const standardGroups = categories
     .map((category) => {
-      const catSlug = category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')
+      const catSlug = getCatSlug(category)
       return {
         category: {
           ...category,
@@ -296,4 +300,59 @@ export function groupItemsByCategory(
       }
     })
     .filter((group) => group.items.length > 0)
+
+  // 2. Identify Drink Category Slugs for type separation
+  const drinkSlugs = new Set(
+    categories
+      .filter((c) => c.type === 'drink')
+      .map(getCatSlug)
+  )
+
+  // 3. Create Popular Groups
+  const popularGroups: Array<{
+    category: Omit<MenuCategory, 'image'> & { image?: { url: string; alt?: string } }
+    items: typeof items
+  }> = []
+
+  // Popular Food
+  const popularFood = items.filter(
+    (i) => i.isPopular && i.isAvailable && !drinkSlugs.has(i.categorySlug)
+  )
+
+  if (popularFood.length > 0) {
+    popularGroups.push({
+      category: {
+        _id: 'popular-food',
+        name: 'Popular',
+        slug: { current: 'popular-food' },
+        displayOrder: -1,
+        isActive: true,
+        type: 'food',
+        description: "Our guests' favorite dishes"
+      },
+      items: popularFood
+    })
+  }
+
+  // Popular Drinks
+  const popularDrink = items.filter(
+    (i) => i.isPopular && i.isAvailable && drinkSlugs.has(i.categorySlug)
+  )
+
+  if (popularDrink.length > 0) {
+    popularGroups.push({
+      category: {
+        _id: 'popular-drinks',
+        name: 'Popular',
+        slug: { current: 'popular-drinks' },
+        displayOrder: -1,
+        isActive: true,
+        type: 'drink',
+        description: "Most loved refreshments"
+      },
+      items: popularDrink
+    })
+  }
+
+  return [...popularGroups, ...standardGroups]
 }

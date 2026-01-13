@@ -71,27 +71,14 @@ export default async function MenuPage() {
                 <Features key={idx} data={section as FeaturesSectionType} />
             ))}
 
-            {/* Category Navigation */}
-            <MenuNavigation categories={categories} />
+            {/* Category Navigation - using categories from actual groups to ensure 'Popular' is included */}
+            <MenuNavigation categories={menuGroups.map(g => g.category)} />
 
             {/* CAUTION: Category Logic - Splitting Food and Drink */}
             <div className="py-8 space-y-20">
                 {/* 1. FOOD SECTION */}
                 <div className="space-y-2">
-                    {/* Popular Food */}
-                    {popularFood.length > 0 && (
-                        <MenuSection
-                            id="popular-food"
-                            title="Most Popular"
-                            description="Our guests' favorite dishes"
-                            items={popularFood}
-                            showPrices={false}
-                            scrollable
-                            variant="featured"
-                        />
-                    )}
-
-                    {/* Food Categories */}
+                    {/* Food Categories (Includes Popular Food) */}
                     {foodGroups.map((group) => (
                         <MenuSection
                             key={group.category._id}
@@ -101,6 +88,9 @@ export default async function MenuPage() {
                             image={group.category.image}
                             items={group.items}
                             showPrices={false}
+                            // Popular sections are scrollable/featured by default if they match the ID
+                            scrollable={group.category._id === 'popular-food'}
+                            variant={group.category._id === 'popular-food' ? 'featured' : 'default'}
                         />
                     ))}
                 </div>
@@ -108,20 +98,7 @@ export default async function MenuPage() {
                 {/* 2. DRINK SECTION */}
                 {drinkGroups.length > 0 && (
                     <div className="space-y-2">
-                        {/* Popular Drinks */}
-                        {popularDrink.length > 0 && (
-                            <MenuSection
-                                id="popular-drinks"
-                                title="Top Drinks"
-                                description="Most loved refreshments"
-                                items={popularDrink}
-                                showPrices={false}
-                                scrollable
-                                variant="featured"
-                            />
-                        )}
-
-                        {/* Drink Categories */}
+                        {/* Drink Categories (Includes Popular Drinks) */}
                         {drinkGroups.map((group) => (
                             <MenuSection
                                 key={group.category._id}
@@ -131,6 +108,8 @@ export default async function MenuPage() {
                                 image={group.category.image}
                                 items={group.items}
                                 showPrices={false}
+                                scrollable={group.category._id === 'popular-drinks'}
+                                variant={group.category._id === 'popular-drinks' ? 'featured' : 'default'}
                             />
                         ))}
                     </div>

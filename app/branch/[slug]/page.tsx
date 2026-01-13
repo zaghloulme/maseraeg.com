@@ -78,9 +78,9 @@ export default async function BranchMenuPage({ params }: PageProps) {
             {/* Hero with branch name */}
             <Hero showPrices={true} branchName={branch.name} />
 
-            {/* Category Navigation */}
-            {categories.length > 0 && (
-                <MenuNavigation categories={categories} />
+            {/* Category Navigation - synced with displayed sections */}
+            {groupedMenu.length > 0 && (
+                <MenuNavigation categories={groupedMenu.map(g => g.category)} />
             )}
 
             {/* Menu Sections */}
