@@ -1,4 +1,3 @@
-import homepage from './homepage'
 import siteSettings from './siteSettings'
 
 import hero from './hero'
@@ -18,7 +17,6 @@ export const schemaTypes = [
     features,
     featureItem,
     seo,
-    homepage,
     // Menu
     branch,
     menuCategory,

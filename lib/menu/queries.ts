@@ -61,13 +61,7 @@ export interface FeatureItem {
   description: string
   icon: string
 }
-
-export interface FeaturesSection {
-  _type: 'features'
-  title: string
-  items: FeatureItem[]
-}
-
+// Homepage Types (Kept for Component Compatibility)
 export interface HeroSection {
   _type: 'hero'
   title: string
@@ -77,15 +71,40 @@ export interface HeroSection {
   ctaLink: string
 }
 
-export type HomepageSection = FeaturesSection | HeroSection
-
-export interface HomepageData {
+export interface FeaturesSection {
+  _type: 'features'
   title: string
-  sections?: HomepageSection[]
+  items: FeatureItem[]
 }
 
+
+// Site Settings Types
 // Site Settings Types
 export interface SiteSettings {
+  hero?: {
+    title: string
+    subtitle: string
+    image: unknown
+    ctaText: string
+    ctaLink: string
+  }
+  features?: FeatureItem[]
+  seo?: {
+    metaTitle?: string
+    metaDescription?: string
+    keywords?: string[]
+    canonicalUrl?: string
+    ogImage?: unknown
+    robots?: {
+      noIndex: boolean
+      noFollow: boolean
+    }
+    openGraph?: {
+      title?: string
+      description?: string
+      image?: unknown
+    }
+  }
   socialLinks?: {
     facebook?: string
     instagram?: string
@@ -101,34 +120,12 @@ export interface SiteSettings {
 // Queries
 export async function getSiteSettings(): Promise<SiteSettings> {
   return client.fetch(`*[_type == "siteSettings"][0]{
+    hero,
+    features,
+    seo,
     socialLinks,
     contactInfo
   }`)
-}
-export async function getHomepage(): Promise<HomepageData> {
-  return client.fetch(`
-    *[_type == "homepage"][0] {
-      title,
-      sections[]{
-        _type,
-        _type == 'hero' => {
-          title,
-          subtitle,
-          image,
-          ctaText,
-          ctaLink
-        },
-        _type == 'features' => {
-          title,
-          items[]{
-            title,
-            description,
-            icon
-          }
-        }
-      }
-    }
-  `)
 }
 
 export async function getBranches(): Promise<Branch[]> {

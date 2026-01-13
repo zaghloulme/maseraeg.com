@@ -10,7 +10,6 @@ import {
     getBranches,
     getMenuCategories,
     getMenuItems,
-    getHomepage,
     getSiteSettings,
     transformMenuItemsForDisplay,
     groupItemsByCategory,
@@ -25,11 +24,10 @@ export const metadata: Metadata = {
 
 export default async function MenuPage() {
     // 1. Fetch all data in parallel
-    const [categories, items, branches, homepage, siteSettings] = await Promise.all([
+    const [categories, items, branches, siteSettings] = await Promise.all([
         getMenuCategories(),
         getMenuItems(),
         getBranches(),
-        getHomepage(),
         getSiteSettings(),
     ])
 
@@ -39,36 +37,33 @@ export default async function MenuPage() {
     // 3. Group by category
     const menuGroups = groupItemsByCategory(transformedItems, categories)
 
-    // 4. Extract data sections
-    // 4. Extract data sections
-    const heroSection = homepage?.sections?.find(s => s._type === 'hero')
-    const featureSections = homepage?.sections?.filter(s => s._type === 'features') || []
+    // 4. Extract data sections from Site Settings
+    const heroSection: HeroSectionType | undefined = siteSettings?.hero ? {
+        _type: 'hero',
+        ...siteSettings.hero
+    } : undefined
+
+    // Construct Features Section from the values in siteSettings
+    const featureSections: FeaturesSectionType[] = siteSettings?.features ? [{
+        _type: 'features',
+        title: "",
+        items: siteSettings.features
+    }] : []
 
     // 5. Split Categories & Groups
     const foodGroups = menuGroups.filter(g => g.category.type !== 'drink')
     const drinkGroups = menuGroups.filter(g => g.category.type === 'drink')
 
-    // 6. Popular Items Logic
-    const popularItems = transformedItems.filter(item => item.isPopular)
 
-    // Helper: Identify drink categories
-    const drinkCategorySlugs = new Set(
-        categories
-            .filter(c => c.type === 'drink')
-            .map(c => c.slug?.current || c.name.toLowerCase().replace(/\s+/g, '-'))
-    )
-
-    const popularDrink = popularItems.filter(i => drinkCategorySlugs.has(i.categorySlug) && i.image?.url)
-    const popularFood = popularItems.filter(i => !drinkCategorySlugs.has(i.categorySlug) && i.image?.url)
 
     return (
         <main className="min-h-screen pb-20">
-            {/* Hero Section from Sanity */}
-            <Hero data={heroSection as HeroSectionType} />
+            {/* Hero Section from Sanity via SiteSettings */}
+            <Hero data={heroSection} />
 
-            {/* Content Sections from Sanity */}
+            {/* Content Sections from Sanity via SiteSettings */}
             {featureSections.map((section, idx) => (
-                <Features key={idx} data={section as FeaturesSectionType} />
+                <Features key={idx} data={section} />
             ))}
 
             {/* Category Navigation - using categories from actual groups to ensure 'Popular' is included */}

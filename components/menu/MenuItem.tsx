@@ -40,19 +40,18 @@ export default function MenuItem({
     // ONLY show this layout if variant is explicitly 'featured'
     if (variant === 'featured' && hasImage) {
         return (
-            <article className="group relative w-full aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[rgba(201,169,97,0.2)] hover:-translate-y-2">
+            <article className="group relative w-full aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[rgba(201,169,97,0.2)]">
                 {/* Background Image */}
                 <Image
                     src={image.url}
                     alt={image.alt || name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover"
                     sizes="(max-width: 768px) 100vw, 50vw"
                 />
 
-                {/* Gradient Overlay - Reduced opacity per user request */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg-primary)] via-[var(--color-bg-primary)]/40 to-transparent opacity-60 translate-y-20 group-hover:translate-y-0 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
+                {/* Gradient Overlay - Strengthened for readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80" />
 
                 {/* Content Overlay */}
                 <div className="absolute bottom-0 w-full p-6 flex flex-col justify-end h-full">
@@ -71,7 +70,7 @@ export default function MenuItem({
                     </div>
 
                     {/* Bottom Info */}
-                    <div className="relative z-10 space-y-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="relative z-10 space-y-3">
                         {/* Dietary Badges - Row */}
                         {dietaryTags && dietaryTags.length > 0 && (
                             <div className="flex flex-wrap gap-2 mb-1">

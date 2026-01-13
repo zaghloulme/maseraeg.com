@@ -67,7 +67,42 @@ export default defineType({
       name: 'seo',
       title: 'Global SEO Settings',
       type: 'seo',
+      group: 'seo',
     }),
+    defineField({
+      name: 'hero',
+      title: 'Homepage Hero',
+      type: 'object',
+      group: 'content',
+      fields: [
+        { name: 'title', type: 'string', title: 'Title' },
+        { name: 'subtitle', type: 'text', title: 'Subtitle', rows: 3 },
+        { name: 'image', type: 'image', title: 'Hero Image', options: { hotspot: true } },
+        { name: 'ctaText', type: 'string', title: 'CTA Text' },
+        { name: 'ctaLink', type: 'string', title: 'CTA Link' }
+      ]
+    }),
+    defineField({
+      name: 'features',
+      title: 'Homepage Features',
+      type: 'array',
+      group: 'content',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'title', type: 'string', title: 'Title' },
+            { name: 'description', type: 'text', title: 'Description' },
+            { name: 'icon', type: 'string', title: 'Icon Name (Lucide)' }
+          ]
+        }
+      ]
+    }),
+  ],
+  groups: [
+    { name: 'settings', title: 'Settings', default: true },
+    { name: 'content', title: 'Homepage Content' },
+    { name: 'seo', title: 'SEO' },
   ],
   preview: {
     select: {
