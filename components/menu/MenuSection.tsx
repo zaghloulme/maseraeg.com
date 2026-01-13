@@ -23,6 +23,7 @@ interface MenuSectionProps {
         alt?: string
     }
     items: MenuItemData[]
+    showPrices: boolean
     scrollable?: boolean
     variant?: 'default' | 'featured'
 }
@@ -77,9 +78,19 @@ export default function MenuSection({
 
                 {/* Menu Items */}
                 {scrollable ? (
-                    <div className="flex overflow-x-auto pb-8 -mx-4 px-4 snap-x gap-4 md:grid md:grid-cols-4 md:gap-6 md:overflow-visible md:pb-0 scrollbar-hide">
+                    <div className={`flex overflow-x-auto pb-8 -mx-4 px-4 snap-x gap-4 md:gap-6 md:overflow-visible md:pb-0 scrollbar-hide ${items.length < 4
+                        ? "md:flex md:justify-center md:flex-wrap"
+                        : "md:grid md:grid-cols-4" // Use grid for 4+ items
+                        }`}>
                         {items.map((item, index) => (
-                            <div key={item._id} className="min-w-[280px] w-[85vw] md:min-w-0 md:w-auto snap-center" style={{ animationDelay: `${index * 0.1}s` }}>
+                            <div
+                                key={item._id}
+                                className={`min-w-[280px] w-[85vw] snap-center ${items.length < 4
+                                    ? "md:w-[280px] lg:w-[320px]" // Fixed width for centered flex
+                                    : "md:min-w-0 md:w-auto" // Auto width for grid
+                                    }`}
+                                style={{ animationDelay: `${index * 0.1}s` }}
+                            >
                                 <MenuItem
                                     name={item.name}
                                     description={item.description}

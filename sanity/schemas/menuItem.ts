@@ -137,6 +137,22 @@ export default defineType({
             description: 'Highlight as a popular choice',
             initialValue: false,
         }),
+        defineField({
+            name: 'popularAt',
+            title: 'Popular At (Location)',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'All Branches', value: 'all' },
+                    { title: 'Smouha Only', value: 'smouha' },
+                    { title: 'Fouad Street Only', value: 'fouad-street' },
+                ],
+                layout: 'radio',
+            },
+            description: 'Choose where this item is highlighted as popular',
+            initialValue: 'all',
+            hidden: ({ document }) => !document?.isPopular,
+        }),
     ],
     orderings: [
         {

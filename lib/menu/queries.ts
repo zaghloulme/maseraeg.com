@@ -52,6 +52,7 @@ export interface MenuItem {
   isActive: boolean
   isNew?: boolean
   isPopular?: boolean
+  popularAt?: 'all' | 'smouha' | 'fouad-street'
 }
 
 // Homepage Types
@@ -202,7 +203,8 @@ export async function getMenuItems(): Promise<MenuItem[]> {
       displayOrder,
       isActive,
       isNew,
-      isPopular
+      isPopular,
+      popularAt
     }
   `)
 }
@@ -226,7 +228,17 @@ export function transformMenuItemsForDisplay(
   return items.map((item) => {
     let price: number | undefined
     let isAvailable = true
-    let isPopular = item.isPopular
+
+    // Popularity Logic
+    let isPopular = false
+    if (item.isPopular) {
+      const scope = item.popularAt || 'all'
+      if (scope === 'all') {
+        isPopular = true
+      } else if (branchSlug && scope === branchSlug) {
+        isPopular = true
+      }
+    }
 
     if (branchSlug && item.branchPricing) {
       const branchPrice = item.branchPricing.find(
@@ -235,7 +247,7 @@ export function transformMenuItemsForDisplay(
       if (branchPrice) {
         price = branchPrice.price
         isAvailable = branchPrice.isAvailable !== false
-        isPopular = !!branchPrice.isHighlighted
+        if (branchPrice.isHighlighted) isPopular = true
       }
     }
 
