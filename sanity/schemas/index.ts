@@ -9,6 +9,7 @@ import seo from './seo'
 import branch from './branch'
 import menuCategory from './menuCategory'
 import menuItem from './menuItem'
+import privacyPolicy from './privacyPolicy'
 
 
 export const schemaTypes = [
@@ -22,5 +23,7 @@ export const schemaTypes = [
     branch,
     menuCategory,
     menuItem,
+    // Legal
+    privacyPolicy,
 ]
 

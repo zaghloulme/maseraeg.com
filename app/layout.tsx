@@ -7,11 +7,12 @@ import { Suspense } from 'react'
 import { GoogleTagManager } from '@next/third-parties/google'
 import { Inter, Playfair_Display, Great_Vibes } from 'next/font/google'
 import { PageViewTracker } from '@/components/PageViewTracker'
-import CookieConsent from '@/components/CookieConsent'
+import CookieConsentBanner from '@/components/CookieConsentBanner'
 import { VisualEditing } from '@/components/VisualEditing'
 import PageLoader from '@/components/PageLoader'
 import { Metadata } from 'next'
 import './globals.css'
+import './cookieconsent.css'
 
 // Configure fonts from Google Fonts
 const inter = Inter({
@@ -79,7 +80,7 @@ export default function RootLayout({
                 )}
                 {children}
                 <VisualEditing />
-                <CookieConsent />
+                <CookieConsentBanner />
             </body>
         </html>
     )

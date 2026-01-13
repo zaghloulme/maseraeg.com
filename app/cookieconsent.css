@@ -1,0 +1,167 @@
+/**
+ * Ma Sera Cookie Consent Custom Styling
+ * Overrides vanilla-cookieconsent default styles to match brand theme
+ */
+
+/* Main consent modal */
+#cc-main .cm {
+    background: #233b59 !important;
+    border: 1px solid rgba(201, 169, 97, 0.2) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+#cc-main .cm__title {
+    color: #c9a961 !important;
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif !important;
+    font-size: 1.5rem !important;
+}
+
+#cc-main .cm__desc {
+    color: #f8f5f0 !important;
+    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+/* Buttons */
+#cc-main .cm__btn {
+    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease !important;
+}
+
+#cc-main .cm__btn--primary {
+    background: #c9a961 !important;
+    color: #233b59 !important;
+    border: none !important;
+}
+
+#cc-main .cm__btn--primary:hover {
+    background: #dfc07c !important;
+    transform: translateY(-1px) !important;
+}
+
+#cc-main .cm__btn--secondary {
+    background: transparent !important;
+    color: #c9a961 !important;
+    border: 1px solid #c9a961 !important;
+}
+
+#cc-main .cm__btn--secondary:hover {
+    background: rgba(201, 169, 97, 0.1) !important;
+}
+
+/* Footer links */
+#cc-main .cm__footer a {
+    color: #c9a961 !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+#cc-main .cm__footer a:hover {
+    color: #dfc07c !important;
+    text-decoration: underline !important;
+}
+
+/* Preferences modal */
+#cc-main .pm {
+    background: #233b59 !important;
+    border: 1px solid rgba(201, 169, 97, 0.2) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+#cc-main .pm__title {
+    color: #c9a961 !important;
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif !important;
+}
+
+#cc-main .pm__section-title {
+    color: #f8f5f0 !important;
+    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+}
+
+#cc-main .pm__section-desc {
+    color: #c9c4bb !important;
+    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+/* Toggle switches */
+#cc-main .section__toggle {
+    background: #1c3149 !important;
+}
+
+#cc-main .section__toggle.toggle--on {
+    background: #c9a961 !important;
+}
+
+#cc-main .toggle__icon-on,
+#cc-main .toggle__icon-off {
+    background: #233b59 !important;
+}
+
+/* Badge (Always Enabled) */
+#cc-main .pm__badge {
+    background: rgba(201, 169, 97, 0.2) !important;
+    color: #c9a961 !important;
+    border: 1px solid #c9a961 !important;
+    font-size: 0.7rem !important;
+    padding: 2px 8px !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+}
+
+/* Links in preferences */
+#cc-main .cc__link {
+    color: #c9a961 !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+#cc-main .cc__link:hover {
+    color: #dfc07c !important;
+    border-bottom-color: #dfc07c !important;
+}
+
+/* Close button */
+#cc-main .pm__close-btn {
+    color: #c9a961 !important;
+    transition: color 0.3s ease !important;
+}
+
+#cc-main .pm__close-btn:hover {
+    color: #dfc07c !important;
+}
+
+/* Scrollbar in preferences modal */
+#cc-main .pm__section::-webkit-scrollbar {
+    width: 8px;
+}
+
+#cc-main .pm__section::-webkit-scrollbar-track {
+    background: #1c3149;
+}
+
+#cc-main .pm__section::-webkit-scrollbar-thumb {
+    background: #6b6560;
+    border-radius: 4px;
+}
+
+#cc-main .pm__section::-webkit-scrollbar-thumb:hover {
+    background: #c9a961;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #cc-main .cm {
+        margin: 1rem !important;
+    }
+
+    #cc-main .cm__title {
+        font-size: 1.25rem !important;
+    }
+}
