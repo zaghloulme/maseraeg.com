@@ -58,8 +58,8 @@ export default async function MenuPage() {
             .map(c => c.slug?.current || c.name.toLowerCase().replace(/\s+/g, '-'))
     )
 
-    const popularDrink = popularItems.filter(i => drinkCategorySlugs.has(i.categorySlug)).slice(0, 4)
-    const popularFood = popularItems.filter(i => !drinkCategorySlugs.has(i.categorySlug)).slice(0, 4)
+    const popularDrink = popularItems.filter(i => drinkCategorySlugs.has(i.categorySlug) && i.image?.url)
+    const popularFood = popularItems.filter(i => !drinkCategorySlugs.has(i.categorySlug) && i.image?.url)
 
     return (
         <main className="min-h-screen pb-20">
@@ -86,6 +86,8 @@ export default async function MenuPage() {
                             description="Our guests' favorite dishes"
                             items={popularFood}
                             showPrices={false}
+                            scrollable
+                            variant="featured"
                         />
                     )}
 
@@ -114,6 +116,8 @@ export default async function MenuPage() {
                                 description="Most loved refreshments"
                                 items={popularDrink}
                                 showPrices={false}
+                                scrollable
+                                variant="featured"
                             />
                         )}
 

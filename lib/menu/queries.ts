@@ -245,7 +245,7 @@ export function transformMenuItemsForDisplay(
       description: item.description,
       image: item.image
         ? {
-          url: urlFor(item.image).width(600).height(450).url(),
+          url: urlFor(item.image).width(450).height(800).url(),
           alt: item.name,
         }
         : undefined,

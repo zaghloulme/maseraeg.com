@@ -23,7 +23,8 @@ interface MenuSectionProps {
         alt?: string
     }
     items: MenuItemData[]
-    showPrices: boolean
+    scrollable?: boolean
+    variant?: 'default' | 'featured'
 }
 
 export default function MenuSection({
@@ -33,6 +34,8 @@ export default function MenuSection({
     image,
     items,
     showPrices,
+    scrollable = false,
+    variant = 'default',
 }: MenuSectionProps) {
     if (items.length === 0) return null
 
@@ -42,7 +45,7 @@ export default function MenuSection({
             className="menu-section"
             aria-labelledby={`heading-${id}`}
         >
-            <div className="container-narrow">
+            <div className={scrollable ? "container-wide" : "container-narrow"}>
                 {/* Category Header */}
                 <header className="category-header mb-12 flex flex-col items-center text-center">
                     {image && (
@@ -72,23 +75,44 @@ export default function MenuSection({
                     )}
                 </header>
 
-                {/* Menu Items - Two column on desktop */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
-                    {items.map((item, index) => (
-                        <div key={item._id} style={{ animationDelay: `${index * 0.1}s` }}>
-                            <MenuItem
-                                name={item.name}
-                                description={item.description}
-                                image={item.image}
-                                price={item.price}
-                                showPrice={showPrices}
-                                dietaryTags={item.dietaryTags}
-                                isNew={item.isNew}
-                                isPopular={item.isPopular}
-                            />
-                        </div>
-                    ))}
-                </div>
+                {/* Menu Items */}
+                {scrollable ? (
+                    <div className="flex overflow-x-auto pb-8 -mx-4 px-4 snap-x gap-4 md:grid md:grid-cols-4 md:gap-6 md:overflow-visible md:pb-0 scrollbar-hide">
+                        {items.map((item, index) => (
+                            <div key={item._id} className="min-w-[280px] w-[85vw] md:min-w-0 md:w-auto snap-center" style={{ animationDelay: `${index * 0.1}s` }}>
+                                <MenuItem
+                                    name={item.name}
+                                    description={item.description}
+                                    image={item.image}
+                                    price={item.price}
+                                    showPrice={showPrices}
+                                    dietaryTags={item.dietaryTags}
+                                    isNew={item.isNew}
+                                    isPopular={item.isPopular}
+                                    variant={variant}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                        {items.map((item, index) => (
+                            <div key={item._id} style={{ animationDelay: `${index * 0.1}s` }}>
+                                <MenuItem
+                                    name={item.name}
+                                    description={item.description}
+                                    image={item.image}
+                                    price={item.price}
+                                    showPrice={showPrices}
+                                    dietaryTags={item.dietaryTags}
+                                    isNew={item.isNew}
+                                    isPopular={item.isPopular}
+                                    variant={variant}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     )
