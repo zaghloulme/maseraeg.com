@@ -6,8 +6,8 @@
 /* Main consent modal - Elegant bar design */
 #cc-main .cm {
     background: linear-gradient(135deg, #1c3149 0%, #233b59 100%) !important;
-    border: none !important;
-    border-top: 2px solid rgba(201, 169, 97, 0.4) !important;
+    border: 1px solid rgba(28, 49, 73, 0.8) !important;
+    border-top: none !important;
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4) !important;
     padding: 1.5rem 2rem !important;
     max-width: 100% !important;
@@ -32,7 +32,7 @@
 }
 
 #cc-main .cm__desc {
-    color: #c9c4bb !important;
+    color: #f8f5f0 !important;
     font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
     line-height: 1.6 !important;
     font-size: 0.9rem !important;
@@ -65,16 +65,17 @@
     white-space: nowrap !important;
 }
 
-/* Accept All - Premium gold button */
+/* Accept All - Golden CTA button matching hero */
 #cc-main .cm__btn--primary {
-    background: linear-gradient(135deg, #c9a961 0%, #b89550 100%) !important;
+    background: #c9a961 !important;
     color: #1c3149 !important;
-    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3) !important;
+    font-weight: 700 !important;
 }
 
 #cc-main .cm__btn--primary:hover {
-    background: linear-gradient(135deg, #dfc07c 0%, #c9a961 100%) !important;
-    box-shadow: 0 6px 16px rgba(201, 169, 97, 0.4) !important;
+    background: #dfc07c !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.4) !important;
     transform: translateY(-2px) !important;
 }
 
@@ -96,11 +97,11 @@
     transform: translateY(-1px) !important;
 }
 
-/* Footer links - Elegant styling */
+/* Footer links - No border line */
 #cc-main .cm__footer {
     margin-top: 1.5rem !important;
-    padding-top: 1.5rem !important;
-    border-top: 1px solid rgba(201, 169, 97, 0.15) !important;
+    padding-top: 0 !important;
+    border-top: none !important;
     background: transparent !important;
 }
 
@@ -154,13 +155,24 @@
     font-size: 0.9rem !important;
 }
 
+/* Preferences modal sections - Fix white background */
 #cc-main .pm__section {
     padding: 1.25rem !important;
     border-bottom: 1px solid rgba(201, 169, 97, 0.1) !important;
+    background: transparent !important;
 }
 
 #cc-main .pm__section:last-child {
     border-bottom: none !important;
+}
+
+/* Fix white accordion headers */
+#cc-main .pm__section-title-wrapper {
+    background: transparent !important;
+}
+
+#cc-main .pm__section-expandable {
+    background: transparent !important;
 }
 
 /* Toggle switches - Premium gold */
