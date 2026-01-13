@@ -84,16 +84,21 @@ export default async function BranchMenuPage({ params }: PageProps) {
             )}
 
             {/* Menu Sections */}
-            {groupedMenu.map(({ category, items }) => (
-                <MenuSection
-                    key={category._id}
-                    id={category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')}
-                    title={category.name}
-                    description={category.description}
-                    items={items}
-                    showPrices={true}
-                />
-            ))}
+            {groupedMenu.map(({ category, items }) => {
+                const isPopularSection = category._id === 'popular-food' || category._id === 'popular-drinks'
+                return (
+                    <MenuSection
+                        key={category._id}
+                        id={category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')}
+                        title={category.name}
+                        description={category.description}
+                        items={items}
+                        showPrices={true}
+                        scrollable={isPopularSection}
+                        variant={isPopularSection ? 'featured' : 'default'}
+                    />
+                )
+            })}
 
             {/* Empty State */}
             {groupedMenu.length === 0 && (
