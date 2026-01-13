@@ -44,31 +44,32 @@ export default function MenuSection({
         >
             <div className="container-narrow">
                 {/* Category Header */}
-                <header className="category-header mb-8">
-                    <div className="flex items-center gap-4 mb-2">
-                        {image && (
-                            <div className="relative w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-full overflow-hidden border border-[var(--color-border-subtle)] shadow-sm">
-                                <img
-                                    src={image.url}
-                                    alt={image.alt || title}
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                        )}
-                        <h2
-                            id={`heading-${id}`}
-                            className="title-category focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded px-2 -mx-2"
-                            tabIndex={0}
-                        >
-                            {title}
-                        </h2>
-                    </div>
+                <header className="category-header mb-12 flex flex-col items-center text-center">
+                    {image && (
+                        <div className="relative w-24 h-24 md:w-28 md:h-28 mb-6 shrink-0 rounded-full overflow-hidden border-2 border-[var(--color-gold)] shadow-lg">
+                            <img
+                                src={image.url}
+                                alt={image.alt || title}
+                                className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                            />
+                        </div>
+                    )}
+                    <h2
+                        id={`heading-${id}`}
+                        className="title-category text-3xl md:text-4xl font-display text-[var(--color-gold)] mb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded px-4"
+                        tabIndex={0}
+                    >
+                        {title}
+                    </h2>
+
+                    {/* Decorative separator */}
+                    <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-gold)] to-transparent opacity-60 mb-4" />
+
                     {description && (
-                        <p className={`text-[var(--color-text-muted)] text-sm italic ${image ? 'pl-[0.5rem] md:pl-0' : ''}`}>
+                        <p className="text-[var(--color-text-muted)] text-sm md:text-base italic max-w-2xl mx-auto leading-relaxed">
                             {description}
                         </p>
                     )}
-                    <div className="accent-line mt-4" />
                 </header>
 
                 {/* Menu Items - Two column on desktop */}
