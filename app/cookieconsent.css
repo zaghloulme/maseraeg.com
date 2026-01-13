@@ -177,29 +177,30 @@
     fill: none !important;
 }
 
-/* Prevent white hover on accordion sections - aggressive targeting */
+/* Prevent white hover on accordion sections - comprehensive */
 #cc-main .pm__section:hover,
 #cc-main .pm__section-title-wrapper:hover,
+#cc-main .pm__section--toggle:hover,
+#cc-main .pm__section--expandable:hover,
 #cc-main .section:hover,
 #cc-main .section--toggle:hover,
 #cc-main .section--expandable:hover,
 #cc-main .section__toggle-wrapper:hover,
-#cc-main .pm__section-title-wrapper:hover,
-#cc-main .pm__section .section:hover,
-#cc-main .section__title-wrapper:hover {
+#cc-main .pm__section-title-wrapper:hover .pm__section-title,
+#cc-main .pm__section .section:hover {
     background: transparent !important;
     background-color: transparent !important;
 }
 
-/* Remove category block backgrounds entirely */
-#cc-main .pm__section .section,
+/* Ensure section backgrounds stay transparent */
+#cc-main .pm__section,
+#cc-main .pm__section--toggle,
+#cc-main .pm__section--expandable,
 #cc-main .section,
 #cc-main .section--toggle,
 #cc-main .section--expandable {
     background: transparent !important;
     background-color: transparent !important;
-    border: 1px solid rgba(201, 169, 97, 0.2) !important;
-    border-radius: 6px !important;
 }
 
 /* Footer buttons */
