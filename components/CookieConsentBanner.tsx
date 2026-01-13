@@ -11,8 +11,7 @@ import 'vanilla-cookieconsent/dist/cookieconsent.css'
 
 export default function CookieConsentBanner() {
     useEffect(() => {
-        // Delay consent banner for GDPR best practices (less intrusive)
-        const timer = setTimeout(() => {
+        const runConsent = () => {
             CookieConsent.run({
                 guiOptions: {
                     consentModal: {
@@ -91,9 +90,40 @@ export default function CookieConsentBanner() {
                     },
                 },
             })
-        }, 2500)
+        }
 
-        return () => clearTimeout(timer)
+        // Check if user has already consented
+        // vanilla-cookieconsent uses 'cc_cookie' by default
+        const hasConsented = document.cookie.includes('cc_cookie')
+
+        if (hasConsented) {
+            runConsent()
+        } else {
+            const handleScroll = () => {
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+
+                // If page is not scrollable or very short, show immediately
+                if (scrollHeight <= 0) {
+                    runConsent()
+                    return
+                }
+
+                const scrollPercentage = (window.scrollY / scrollHeight) * 100
+
+                if (scrollPercentage > 15) {
+                    runConsent()
+                    window.removeEventListener('scroll', handleScroll)
+                }
+            }
+
+            // Check immediately in case page is short
+            handleScroll()
+
+            window.addEventListener('scroll', handleScroll)
+
+            // Clean up listener if component unmounts
+            return () => window.removeEventListener('scroll', handleScroll)
+        }
     }, [])
 
     return null
