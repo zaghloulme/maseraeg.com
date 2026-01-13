@@ -169,8 +169,6 @@ export async function getMenuCategories(): Promise<MenuCategory[]> {
       slug,
       description,
       image,
-      description,
-      image,
       displayOrder,
       isActive,
       type
@@ -266,14 +264,20 @@ export function groupItemsByCategory(
   items: ReturnType<typeof transformMenuItemsForDisplay>,
   categories: MenuCategory[]
 ): Array<{
-  category: MenuCategory
+  category: Omit<MenuCategory, 'image'> & { image?: { url: string; alt?: string } }
   items: typeof items
 }> {
   return categories
     .map((category) => {
       const catSlug = category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')
       return {
-        category,
+        category: {
+          ...category,
+          image: category.image ? {
+            url: urlFor(category.image).width(200).height(200).url(),
+            alt: category.name
+          } : undefined
+        },
         items: items.filter(
           (item) => item.categorySlug === catSlug && item.isAvailable
         ),

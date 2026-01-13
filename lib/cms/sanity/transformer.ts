@@ -243,6 +243,7 @@ export class SanityTransformer {
       name: (category.name as string) || '',
       slug: (category.slug as Record<string, unknown>)?.current as string || '',
       description: category.description as string,
+      image: category.image ? SanityTransformer.transformImage(category.image) : undefined,
     }
   }
 

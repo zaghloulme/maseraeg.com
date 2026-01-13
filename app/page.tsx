@@ -64,6 +64,7 @@ export default async function MenuPage() {
                         id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
                         title={group.category.name}
                         description={group.category.description}
+                        image={group.category.image}
                         items={group.items}
                         showPrices={false}
                     />

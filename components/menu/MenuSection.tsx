@@ -18,6 +18,10 @@ interface MenuSectionProps {
     id: string
     title: string
     description?: string
+    image?: {
+        url: string
+        alt?: string
+    }
     items: MenuItemData[]
     showPrices: boolean
 }
@@ -26,6 +30,7 @@ export default function MenuSection({
     id,
     title,
     description,
+    image,
     items,
     showPrices,
 }: MenuSectionProps) {
@@ -39,20 +44,31 @@ export default function MenuSection({
         >
             <div className="container-narrow">
                 {/* Category Header */}
-                <header className="category-header">
-                    <h2
-                        id={`heading-${id}`}
-                        className="title-category focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded px-2 -mx-2"
-                        tabIndex={0}
-                    >
-                        {title}
-                    </h2>
+                <header className="category-header mb-8">
+                    <div className="flex items-center gap-4 mb-2">
+                        {image && (
+                            <div className="relative w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-full overflow-hidden border border-[var(--color-border-subtle)] shadow-sm">
+                                <img
+                                    src={image.url}
+                                    alt={image.alt || title}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        )}
+                        <h2
+                            id={`heading-${id}`}
+                            className="title-category focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded px-2 -mx-2"
+                            tabIndex={0}
+                        >
+                            {title}
+                        </h2>
+                    </div>
                     {description && (
-                        <p className="text-[var(--color-text-muted)] mt-2 text-sm italic">
+                        <p className={`text-[var(--color-text-muted)] text-sm italic ${image ? 'pl-[0.5rem] md:pl-0' : ''}`}>
                             {description}
                         </p>
                     )}
-                    <div className="accent-line" />
+                    <div className="accent-line mt-4" />
                 </header>
 
                 {/* Menu Items - Two column on desktop */}
