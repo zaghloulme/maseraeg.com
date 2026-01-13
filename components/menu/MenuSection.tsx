@@ -43,46 +43,33 @@ export default function MenuSection({
             aria-labelledby={`heading-${id}`}
         >
             <div className="container-narrow">
-                {/* Category Header - Split Layout */}
-                <header className="category-header mb-12 relative">
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10">
-                        {/* Image Container - Rectangular for full visibility */}
-                        {image && (
-                            <div className="relative shrink-0 w-full md:w-auto flex justify-center md:block">
-                                <div className="relative w-48 h-48 md:w-56 md:h-40 rounded-2xl overflow-hidden border border-[var(--color-border-subtle)] shadow-2xl group">
-                                    {/* Gold overlay effect on hover (subtle) */}
-                                    <div className="absolute inset-0 bg-[var(--color-gold)] opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-10" />
-                                    <img
-                                        src={image.url}
-                                        alt={image.alt || title}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                </div>
-                                {/* Decorative offset border */}
-                                <div className="absolute top-3 -right-3 w-full h-full border border-[var(--color-gold)] rounded-2xl -z-10 hidden md:block opacity-30" style={{ right: '-12px', top: '12px', width: '224px', height: '160px' }} />
-                            </div>
-                        )}
-
-                        {/* Text Content */}
-                        <div className="flex-1 text-center md:text-left pt-2">
-                            <div className="flex items-center justify-center md:justify-start gap-4 mb-3">
-                                <h2
-                                    id={`heading-${id}`}
-                                    className="title-category text-3xl md:text-5xl font-display text-[var(--color-gold)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded"
-                                    tabIndex={0}
-                                >
-                                    {title}
-                                </h2>
-                                <div className="h-px bg-[var(--color-gold)] opacity-30 flex-1 hidden md:block" />
-                            </div>
-
-                            {description && (
-                                <p className="text-[var(--color-text-muted)] text-sm md:text-lg italic leading-relaxed max-w-2xl">
-                                    {description}
-                                </p>
-                            )}
+                {/* Category Header */}
+                <header className="category-header mb-12 flex flex-col items-center text-center">
+                    {image && (
+                        <div className="relative w-32 h-32 md:w-40 md:h-40 mb-6 shrink-0 rounded-full overflow-hidden border-2 border-[var(--color-gold)] shadow-lg">
+                            <img
+                                src={image.url}
+                                alt={image.alt || title}
+                                className="w-full h-full object-cover transition-transform duration-700"
+                            />
                         </div>
-                    </div>
+                    )}
+                    <h2
+                        id={`heading-${id}`}
+                        className="title-category text-3xl md:text-4xl font-display text-[var(--color-gold)] mb-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded px-4"
+                        tabIndex={0}
+                    >
+                        {title}
+                    </h2>
+
+                    {/* Decorative separator */}
+                    <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-gold)] to-transparent opacity-60 mb-4" />
+
+                    {description && (
+                        <p className="text-[var(--color-text-muted)] text-sm md:text-base italic max-w-2xl mx-auto leading-relaxed">
+                            {description}
+                        </p>
+                    )}
                 </header>
 
                 {/* Menu Items - Two column on desktop */}
