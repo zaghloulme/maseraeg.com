@@ -785,35 +785,35 @@ h4 {
 }
 
 .animate-fade-in {
-  animation: fadeIn 1s ease-out forwards;
+  animation: fadeIn 1.5s ease-out forwards;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
+  animation: fadeInUp 1.2s ease-out forwards;
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
 /* Stagger delays */
 .delay-1 {
-  animation-delay: 0.2s;
+  animation-delay: 0.3s;
   opacity: 0;
 }
 
 .delay-2 {
-  animation-delay: 0.4s;
-  opacity: 0;
-}
-
-.delay-3 {
   animation-delay: 0.6s;
   opacity: 0;
 }
 
+.delay-3 {
+  animation-delay: 0.9s;
+  opacity: 0;
+}
+
 .delay-4 {
-  animation-delay: 0.8s;
+  animation-delay: 1.2s;
   opacity: 0;
 }
 
@@ -825,11 +825,11 @@ body.loading .animate-fade-in-up {
 }
 
 body.loaded .animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn 1.5s ease-out forwards;
 }
 
 body.loaded .animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out forwards;
+  animation: fadeInUp 1.2s ease-out forwards;
 }
 
 /* Global hide during loading */
@@ -845,7 +845,7 @@ body.loading .hero-landing {
 }
 
 body.loaded .hero-landing {
-  animation: heroEnter 0.6s ease-out forwards;
+  animation: heroEnter 1.5s ease-out forwards;
 }
 
 @keyframes heroEnter {
