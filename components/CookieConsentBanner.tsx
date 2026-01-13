@@ -110,7 +110,7 @@ export default function CookieConsentBanner() {
 
                 const scrollPercentage = (window.scrollY / scrollHeight) * 100
 
-                if (scrollPercentage > 5) {
+                if (scrollPercentage > 3) {
                     runConsent()
                     window.removeEventListener('scroll', handleScroll)
                 }
