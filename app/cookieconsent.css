@@ -3,13 +3,13 @@
  * Premium bar layout design
  */
 
-/* Main consent modal - Elegant bar design */
+/* Main consent modal - Compact elegant bar design */
 #cc-main .cm {
     background: linear-gradient(135deg, #1c3149 0%, #233b59 100%) !important;
     border: 1px solid rgba(28, 49, 73, 0.8) !important;
     border-top: none !important;
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4) !important;
-    padding: 1.5rem 2rem !important;
+    padding: 1rem 2rem !important;
     max-width: 100% !important;
 }
 
@@ -71,6 +71,7 @@
     color: #1c3149 !important;
     box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3) !important;
     font-weight: 700 !important;
+    border: none !important;
 }
 
 #cc-main .cm__btn--primary:hover {
@@ -97,9 +98,9 @@
     transform: translateY(-1px) !important;
 }
 
-/* Footer links - No border line */
+/* Footer links - Compact, no border line */
 #cc-main .cm__footer {
-    margin-top: 1.5rem !important;
+    margin-top: 0.75rem !important;
     padding-top: 0 !important;
     border-top: none !important;
     background: transparent !important;
