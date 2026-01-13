@@ -6,7 +6,7 @@
  */
 
 import { defineConfig } from 'sanity'
-import { structureTool } from 'sanity/structure'
+import { structureTool, type StructureBuilder } from 'sanity/structure'
 import { schemaTypes } from './sanity/schemas'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '27p8z5ah'
@@ -24,7 +24,7 @@ export default defineConfig({
 
   plugins: [
     structureTool({
-      structure: (S) =>
+      structure: (S: StructureBuilder) =>
         S.list()
           .title('Content')
           .items([
