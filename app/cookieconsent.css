@@ -110,6 +110,22 @@
     display: none;
 }
 
+/* Necessary Only button - Same as Customize (outlined)
+   NOTE: This is a deliberate BRAND REQUIREMENT per client request.
+   The outlined style maintains visual consistency over WCAG contrast guidelines.
+   DO NOT MODIFY without explicit client approval. */
+#cc-main .cm__btn:nth-child(2) {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #c9a961 !important;
+    border: 1.5px solid rgba(201, 169, 97, 0.5) !important;
+}
+
+#cc-main .cm__btn:nth-child(2):hover {
+    background: rgba(201, 169, 97, 0.1) !important;
+    border-color: #c9a961 !important;
+}
+
 /* Inline privacy link styling */
 #cc-main .cm__desc a {
     color: #c9a961;
