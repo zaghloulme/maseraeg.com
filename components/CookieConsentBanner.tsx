@@ -58,31 +58,31 @@ export default function CookieConsentBanner() {
                                     {
                                         title: 'Cookie Usage',
                                         description:
-                                            'We use cookies to provide you with the best possible experience on our website. Cookies help us remember your preferences, understand how you interact with our menu, and improve our services.',
+                                            'We use cookies to ensure optimal website performance and user experience.',
                                     },
                                     {
                                         title:
-                                            'Strictly Necessary Cookies <span class="pm__badge">Always Enabled</span>',
+                                            'Strictly Necessary <span class="pm__badge">Required</span>',
                                         description:
-                                            'These cookies are essential for the website to function properly. They enable basic features like page navigation, access to secure areas, and remembering your cookie preferences. The website cannot function properly without these cookies.',
+                                            'Essential for basic site functionality and security. Cannot be disabled.',
                                         linkedCategory: 'necessary',
                                     },
                                     {
-                                        title: 'Analytics Cookies',
+                                        title: 'Analytics',
                                         description:
-                                            'We use these cookies to understand how visitors interact with our menu and website. This helps us analyze visitor behavior, measure website performance, and improve our services to provide you with a better dining experience.',
+                                            'Help us improve our menu and services by understanding how you use our site.',
                                         linkedCategory: 'analytics',
                                     },
                                     {
-                                        title: 'Marketing Cookies',
+                                        title: 'Marketing',
                                         description:
-                                            'These cookies help us show you relevant offers and promotions. We use platforms like Meta (Facebook/Instagram) to reach our guests with special deals, new menu items, and exclusive offers tailored to your interests.',
+                                            'Used to show you relevant offers and special promotions based on your interests.',
                                         linkedCategory: 'marketing',
                                     },
                                     {
                                         title: 'More Information',
                                         description:
-                                            'For any questions about our cookie policy and your choices, please visit our <a class="cc__link" href="/privacy-policy">Privacy Policy</a> or contact us directly.',
+                                            'Questions? Contact us or view our <a class="cc__link" href="/privacy-policy">Privacy Policy</a>.',
                                     },
                                 ],
                             },
@@ -110,7 +110,7 @@ export default function CookieConsentBanner() {
 
                 const scrollPercentage = (window.scrollY / scrollHeight) * 100
 
-                if (scrollPercentage > 15) {
+                if (scrollPercentage > 5) {
                     runConsent()
                     window.removeEventListener('scroll', handleScroll)
                 }
