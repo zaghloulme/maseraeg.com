@@ -38,7 +38,7 @@ export default function Hero({ showPrices = false, branchName, data }: HeroProps
             {/* Main Content */}
             <div className="relative z-10 max-w-3xl mx-auto">
                 {/* Logo or Hero Image */}
-                <div className="animate-fade-in-up">
+                <div className="animate-fade-in-up delay-1">
                     {content.image ? (
                         <Image
                             src={urlFor(content.image).width(800).url()}
