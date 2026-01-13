@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import MenuItem from './MenuItem'
 
 interface MenuItemData {
@@ -51,10 +52,12 @@ export default function MenuSection({
                 <header className="category-header mb-12 flex flex-col items-center text-center">
                     {image && (
                         <div className="relative w-32 h-32 md:w-40 md:h-40 mb-6 shrink-0 rounded-full overflow-hidden border-2 border-[var(--color-gold)] shadow-lg">
-                            <img
+                            <Image
                                 src={image.url}
                                 alt={image.alt || title}
-                                className="w-full h-full object-cover transition-transform duration-700"
+                                fill
+                                sizes="(max-width: 768px) 128px, 160px"
+                                className="object-cover transition-transform duration-700"
                             />
                         </div>
                     )}
