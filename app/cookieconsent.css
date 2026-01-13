@@ -316,6 +316,31 @@
     border-bottom-color: #dfc07c !important;
 }
 
+/* Accessibility - Focus Indicators */
+#cc-main .cm__btn:focus-visible,
+#cc-main .pm__btn:focus-visible,
+#cc-main .cc__link:focus-visible,
+#cc-main .cc__link--inline:focus-visible,
+#cc-main .pm__close-btn:focus-visible,
+#cc-main .section__toggle:focus-visible {
+    outline: 2px solid #ffffff !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.5) !important;
+    z-index: 10 !important;
+}
+
+/* Ensure focus outline is visible on golden buttons */
+#cc-main .cm__btn--primary:focus-visible,
+#cc-main .pm__btn--primary:focus-visible {
+    outline-color: #1c3149 !important;
+}
+
+/* High contrast selection for text */
+#cc-main ::selection {
+    background: #c9a961 !important;
+    color: #1c3149 !important;
+}
+
 /* Close button - Elegant */
 #cc-main .pm__close-btn {
     color: #c9a961 !important;
