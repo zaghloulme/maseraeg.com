@@ -40,8 +40,26 @@ export default async function MenuPage() {
     const menuGroups = groupItemsByCategory(transformedItems, categories)
 
     // 4. Extract data sections
+    // 4. Extract data sections
     const heroSection = homepage?.sections?.find(s => s._type === 'hero')
     const featureSections = homepage?.sections?.filter(s => s._type === 'features') || []
+
+    // 5. Split Categories & Groups
+    const foodGroups = menuGroups.filter(g => g.category.type !== 'drink')
+    const drinkGroups = menuGroups.filter(g => g.category.type === 'drink')
+
+    // 6. Popular Items Logic
+    const popularItems = transformedItems.filter(item => item.isPopular)
+
+    // Helper: Identify drink categories
+    const drinkCategorySlugs = new Set(
+        categories
+            .filter(c => c.type === 'drink')
+            .map(c => c.slug?.current || c.name.toLowerCase().replace(/\s+/g, '-'))
+    )
+
+    const popularDrink = popularItems.filter(i => drinkCategorySlugs.has(i.categorySlug)).slice(0, 4)
+    const popularFood = popularItems.filter(i => !drinkCategorySlugs.has(i.categorySlug)).slice(0, 4)
 
     return (
         <main className="min-h-screen pb-20">
@@ -56,19 +74,63 @@ export default async function MenuPage() {
             {/* Category Navigation */}
             <MenuNavigation categories={categories} />
 
-            {/* Menu Sections */}
-            <div className="py-8 space-y-2">
-                {menuGroups.map((group) => (
-                    <MenuSection
-                        key={group.category._id}
-                        id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
-                        title={group.category.name}
-                        description={group.category.description}
-                        image={group.category.image}
-                        items={group.items}
-                        showPrices={false}
-                    />
-                ))}
+            {/* CAUTION: Category Logic - Splitting Food and Drink */}
+            <div className="py-8 space-y-20">
+                {/* 1. FOOD SECTION */}
+                <div className="space-y-2">
+                    {/* Popular Food */}
+                    {popularFood.length > 0 && (
+                        <MenuSection
+                            id="popular-food"
+                            title="Most Popular"
+                            description="Our guests' favorite dishes"
+                            items={popularFood}
+                            showPrices={false}
+                        />
+                    )}
+
+                    {/* Food Categories */}
+                    {foodGroups.map((group) => (
+                        <MenuSection
+                            key={group.category._id}
+                            id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
+                            title={group.category.name}
+                            description={group.category.description}
+                            image={group.category.image}
+                            items={group.items}
+                            showPrices={false}
+                        />
+                    ))}
+                </div>
+
+                {/* 2. DRINK SECTION */}
+                {drinkGroups.length > 0 && (
+                    <div className="space-y-2">
+                        {/* Popular Drinks */}
+                        {popularDrink.length > 0 && (
+                            <MenuSection
+                                id="popular-drinks"
+                                title="Top Drinks"
+                                description="Most loved refreshments"
+                                items={popularDrink}
+                                showPrices={false}
+                            />
+                        )}
+
+                        {/* Drink Categories */}
+                        {drinkGroups.map((group) => (
+                            <MenuSection
+                                key={group.category._id}
+                                id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
+                                title={group.category.name}
+                                description={group.category.description}
+                                image={group.category.image}
+                                items={group.items}
+                                showPrices={false}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Empty State */}

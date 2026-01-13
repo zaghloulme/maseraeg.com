@@ -26,6 +26,14 @@ export default function MenuItem({
 }: MenuItemProps) {
     const hasImage = image?.url
 
+    const badgeMap: Record<string, { label: string; className: string }> = {
+        vegetarian: { label: 'Veg', className: 'badge-vegetarian' },
+        vegan: { label: 'Vegan', className: 'badge-vegan' },
+        'gluten-free': { label: 'GF', className: 'badge-gluten-free' },
+        spicy: { label: 'Spicy', className: 'badge-spicy' },
+        nuts: { label: 'Cont. Nuts', className: 'badge-nuts' },
+    }
+
     // Featured items (popular or with images) get special treatment
     if (hasImage && isPopular) {
         return (
@@ -44,12 +52,18 @@ export default function MenuItem({
                 {/* Content */}
                 <div className="flex flex-col justify-center">
                     {/* Badges */}
-                    <div className="flex gap-2 mb-2">
+                    <div className="flex flex-wrap gap-2 mb-2">
                         {isNew && <span className="badge badge-new">New</span>}
                         {isPopular && <span className="badge badge-popular">Popular</span>}
-                        {dietaryTags && dietaryTags.includes('spicy') && (
-                            <span className="badge badge-spicy">Spicy</span>
-                        )}
+                        {dietaryTags?.map((tag) => {
+                            const badge = badgeMap[tag]
+                            if (!badge) return null
+                            return (
+                                <span key={tag} className={`badge ${badge.className}`}>
+                                    {badge.label}
+                                </span>
+                            )
+                        })}
                     </div>
 
                     {/* Name & Price */}
@@ -77,10 +91,18 @@ export default function MenuItem({
                 <h3 className="menu-item-name">
                     {name}
                     {/* Inline Badges */}
-                    {isNew && <span className="badge badge-new ml-2">New</span>}
-                    {dietaryTags && dietaryTags.includes('spicy') && (
-                        <span className="badge badge-spicy ml-2">Spicy</span>
-                    )}
+                    <span className="inline-flex gap-1 ml-3 align-middle">
+                        {isNew && <span className="badge badge-new">New</span>}
+                        {dietaryTags?.map((tag) => {
+                            const badge = badgeMap[tag]
+                            if (!badge) return null
+                            return (
+                                <span key={tag} className={`badge ${badge.className}`}>
+                                    {badge.label}
+                                </span>
+                            )
+                        })}
+                    </span>
                 </h3>
 
                 {/* Dotted line */}

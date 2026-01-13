@@ -399,6 +399,26 @@ h4 {
   color: var(--color-cream);
 }
 
+.badge-vegetarian {
+  background: #5a7d5a;
+  color: var(--color-cream);
+}
+
+.badge-vegan {
+  background: #3a5a40;
+  color: var(--color-cream);
+}
+
+.badge-gluten-free {
+  background: #5c7c8a;
+  color: var(--color-cream);
+}
+
+.badge-nuts {
+  background: #8a6a4b;
+  color: var(--color-cream);
+}
+
 /* ========================================
    BUTTONS
    ======================================== */
