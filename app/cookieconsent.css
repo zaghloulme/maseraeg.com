@@ -66,16 +66,23 @@
 }
 
 /* Accept All - Golden CTA button matching hero */
-#cc-main .cm__btn--primary {
+#cc-main .cm__btn--primary,
+#cc-main .cm button[data-role="all"],
+#cc-main .cm .cm__btn:first-child,
+#cc-main button.cm__btn--primary {
     background: #c9a961 !important;
+    background-color: #c9a961 !important;
     color: #1c3149 !important;
     box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3) !important;
     font-weight: 700 !important;
     border: none !important;
 }
 
-#cc-main .cm__btn--primary:hover {
+#cc-main .cm__btn--primary:hover,
+#cc-main .cm button[data-role="all"]:hover,
+#cc-main button.cm__btn--primary:hover {
     background: #dfc07c !important;
+    background-color: #dfc07c !important;
     box-shadow: 0 4px 12px rgba(201, 169, 97, 0.4) !important;
     transform: translateY(-2px) !important;
 }
