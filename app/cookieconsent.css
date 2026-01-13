@@ -1,389 +1,244 @@
 /**
- * Ma Sera Cookie Consent Custom Styling
- * Premium bar layout design
+ * Ma Sera Cookie Consent Theme
+ * Built on vanilla-cookieconsent v3
+ * 
+ * Uses CSS variables as recommended by the official documentation:
+ * https://cookieconsent.orestbida.com/advanced/ui-customization.html
  */
 
-/* Main consent modal - Compact elegant bar design */
+/* ==========================================================================
+   CSS Variables - Ma Sera Theme
+   ========================================================================== */
+#cc-main {
+    /* Typography */
+    --cc-font-family: var(--font-body), 'Inter', system-ui, sans-serif;
+
+    /* Border radius */
+    --cc-modal-border-radius: 0;
+    --cc-btn-border-radius: 4px;
+
+    /* Z-index */
+    --cc-z-index: 2147483647;
+
+    /* Transitions */
+    --cc-modal-transition-duration: 0.3s;
+
+    /* ===== Color Scheme - Dark Mode ===== */
+
+    /* Background colors */
+    --cc-bg: #1c3149;
+    --cc-cookie-category-block-bg: transparent;
+    --cc-section-category-border: rgba(201, 169, 97, 0.15);
+
+    /* Text colors */
+    --cc-primary-color: #f8f5f0;
+    --cc-secondary-color: #c9c4bb;
+
+    /* Separator/border colors */
+    --cc-separator-border-color: rgba(201, 169, 97, 0.15);
+
+    /* Links */
+    --cc-link-color: #c9a961;
+
+    /* Primary button (Accept All) - Gold */
+    --cc-btn-primary-bg: #c9a961;
+    --cc-btn-primary-color: #1c3149;
+    --cc-btn-primary-border-color: #c9a961;
+    --cc-btn-primary-hover-bg: #dfc07c;
+    --cc-btn-primary-hover-color: #1c3149;
+    --cc-btn-primary-hover-border-color: #dfc07c;
+
+    /* Secondary button (Customize/Necessary Only) - Outlined */
+    --cc-btn-secondary-bg: transparent;
+    --cc-btn-secondary-color: #c9a961;
+    --cc-btn-secondary-border-color: rgba(201, 169, 97, 0.5);
+    --cc-btn-secondary-hover-bg: rgba(201, 169, 97, 0.1);
+    --cc-btn-secondary-hover-color: #c9a961;
+    --cc-btn-secondary-hover-border-color: #c9a961;
+
+    /* Toggle switches */
+    --cc-toggle-on-bg: #c9a961;
+    --cc-toggle-off-bg: rgba(201, 169, 97, 0.2);
+    --cc-toggle-on-knob-bg: #1c3149;
+    --cc-toggle-off-knob-bg: #f8f5f0;
+    --cc-toggle-readonly-bg: #c9a961;
+    --cc-toggle-readonly-knob-bg: #1c3149;
+
+    /* Overlay */
+    --cc-overlay-bg: rgba(0, 0, 0, 0.65);
+
+    /* Focus outline */
+    --cc-focus-ring-color: rgba(201, 169, 97, 0.6);
+}
+
+/* ==========================================================================
+   Consent Modal - Bar Layout Adjustments
+   ========================================================================== */
+
+/* Add gold top border separator */
 #cc-main .cm {
-    background: linear-gradient(135deg, #1c3149 0%, #233b59 100%) !important;
-    border: none !important;
     border-top: 1px solid #c9a961 !important;
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4) !important;
-    padding: 0.75rem 2rem !important;
-    max-width: 100% !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* Bar inline specific - Center content */
-#cc-main .cm.cm--bar.cm--inline {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 2rem !important;
-}
-
+/* Title styling */
 #cc-main .cm__title {
-    color: #c9a961 !important;
-    font-family: var(--font-display), 'Playfair Display', Georgia, serif !important;
-    font-size: 1.25rem !important;
-    font-weight: 600 !important;
-    margin-bottom: 0 !important;
-    letter-spacing: 0.02em !important;
-    white-space: nowrap !important;
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+    color: #c9a961;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
 
+/* Description text */
 #cc-main .cm__desc {
-    color: #f8f5f0 !important;
-    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
-    line-height: 1.6 !important;
-    font-size: 0.9rem !important;
-    margin-bottom: 0 !important;
-    flex: 1 !important;
-    max-width: 600px !important;
+    color: #c9c4bb;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
-/* Button container */
-#cc-main .cm__btns {
-    display: flex !important;
-    gap: 0.5rem !important;
-    flex-wrap: nowrap !important;
-    margin-top: 0 !important;
-    flex-shrink: 0 !important;
-}
-
-/* Buttons - Compact premium styling */
+/* Button typography */
 #cc-main .cm__btn {
-    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.08em !important;
-    font-size: 0.65rem !important;
-    padding: 0.75rem 1.5rem !important;
-    border-radius: 4px !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: none !important;
-    cursor: pointer !important;
-    white-space: nowrap !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    padding: 0.6rem 1.25rem;
 }
 
-/* Accept All - Golden CTA button matching hero */
-#cc-main .cm__btn--primary,
-#cc-main .cm button[data-role="all"],
-#cc-main .cm .cm__btn:first-child,
-#cc-main button.cm__btn--primary {
-    background: #c9a961 !important;
-    background-color: #c9a961 !important;
-    color: #1c3149 !important;
-    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3) !important;
-    font-weight: 700 !important;
-    border: none !important;
-}
-
-#cc-main .cm__btn--primary:hover,
-#cc-main .cm button[data-role="all"]:hover,
-#cc-main button.cm__btn--primary:hover {
-    background: #dfc07c !important;
-    background-color: #dfc07c !important;
-    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.4) !important;
-    transform: translateY(-2px) !important;
-}
-
-#cc-main .cm__btn--primary:active {
-    transform: translateY(0) !important;
-}
-
-/* Secondary buttons - Hollow outlined style */
-#cc-main .cm__btn--secondary,
-#cc-main .cm button[data-role="show"],
-#cc-main .cm .cm__btn:last-child {
-    background: transparent !important;
-    background-color: transparent !important;
-    color: #c9a961 !important;
-    border: 1.5px solid rgba(201, 169, 97, 0.5) !important;
-    box-shadow: none !important;
-}
-
-#cc-main .cm__btn--secondary:hover,
-#cc-main .cm button[data-role="show"]:hover {
-    background: rgba(201, 169, 97, 0.08) !important;
-    background-color: rgba(201, 169, 97, 0.08) !important;
-    border-color: #c9a961 !important;
-    transform: translateY(-1px) !important;
-}
-
-/* Inline link in description */
-#cc-main .cc__link--inline {
-    color: #c9a961 !important;
-    text-decoration: underline !important;
-    font-weight: 600 !important;
-    margin-left: 0.5rem !important;
-    white-space: nowrap !important;
-}
-
-#cc-main .cc__link--inline:hover {
-    color: #dfc07c !important;
-    text-decoration: none !important;
-}
-
-/* Footer links - Hidden since moved inline */
+/* Hide footer - link is inline */
 #cc-main .cm__footer {
-    display: none !important;
+    display: none;
 }
 
-/* Preferences modal - Premium design */
-#cc-main .pm {
-    background: linear-gradient(135deg, #1c3149 0%, #233b59 100%) !important;
-    border: 1px solid rgba(201, 169, 97, 0.3) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
-    border-radius: 8px !important;
+/* Inline privacy link styling */
+#cc-main .cm__desc a {
+    color: #c9a961;
+    text-decoration: underline;
+    font-weight: 500;
 }
 
+#cc-main .cm__desc a:hover {
+    color: #dfc07c;
+}
+
+/* ==========================================================================
+   Preferences Modal
+   ========================================================================== */
+
+/* Modal header */
 #cc-main .pm__header {
-    background: rgba(201, 169, 97, 0.05) !important;
-    border-bottom: 1px solid rgba(201, 169, 97, 0.15) !important;
-    padding: 1.5rem !important;
-    border-left: none !important;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.15);
 }
 
+/* Modal title */
 #cc-main .pm__title {
-    color: #c9a961 !important;
-    font-family: var(--font-display), 'Playfair Display', Georgia, serif !important;
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+    color: #c9a961;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
+/* Section titles */
 #cc-main .pm__section-title {
-    color: #f8f5f0 !important;
-    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 1rem !important;
-    margin-bottom: 0.5rem !important;
+    color: #f8f5f0;
+    font-weight: 600;
+    font-size: 0.95rem;
 }
 
+/* Section descriptions */
 #cc-main .pm__section-desc {
-    color: #c9c4bb !important;
-    font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
-    line-height: 1.6 !important;
-    font-size: 0.9rem !important;
+    color: #c9c4bb;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
-/* Preferences modal sections - Fix white background and broken look */
-#cc-main .pm__section {
-    padding: 1rem 0 !important;
-    border-bottom: 1px solid rgba(201, 169, 97, 0.1) !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    border-left: none !important;
-    border-right: none !important;
-    border-top: none !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-}
-
-/* Remove border from last section (More Info) */
-#cc-main .pm__section:last-child {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
-}
-
-/* Fix category/service blocks - Remove boxiness */
-#cc-main .pm__section .section,
-#cc-main .section,
-#cc-main .section--expandable {
-    background: transparent !important;
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* Adjust title wrapper specific to unboxed look */
-#cc-main .pm__section-title-wrapper {
-    padding: 0.5rem 0 !important;
-    background: transparent !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-}
-
-#cc-main .pm__section-title {
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    color: #f8f5f0 !important;
-    margin: 0 !important;
-}
-
-/* Description text - prevent boxy look */
-#cc-main .pm__section-desc-wrapper,
-#cc-main .section__desc-wrapper {
-    padding: 0.5rem 0 0 0 !important;
-    background: transparent !important;
-}
-
-#cc-main .pm__section-desc {
-    color: #c9c4bb !important;
-    font-size: 0.85rem !important;
-    line-height: 1.5 !important;
-    padding-right: 2rem !important;
-}
-
-/* Toggle switches - Premium gold integration */
-#cc-main .section__toggle,
-#cc-main .pm__section-arrow {
-    background: #2a415e !important;
-    /* Proper off state color matching dark theme */
-    border: none !important;
-    transition: all 0.3s ease !important;
-    width: 40px !important;
-    height: 22px !important;
-    border-radius: 20px !important;
-}
-
-#cc-main .section__toggle.toggle--on {
-    background: #c9a961 !important;
-    box-shadow: 0 0 10px rgba(201, 169, 97, 0.4) !important;
-}
-
-/* Toggle knob/circle */
-#cc-main .toggle__icon-on,
-#cc-main .toggle__icon-off,
-#cc-main .toggle__handle {
-    background: #ffffff !important;
-    transform: scale(0.8) !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Checkmark color inside toggle */
-#cc-main .toggle__icon-on span {
-    border-color: #1c3149 !important;
-    /* Dark checkmark on white bg */
-}
-
-/* Badge (Required) - Refined */
+/* Badge styling */
 #cc-main .pm__badge {
-    background: rgba(201, 169, 97, 0.1) !important;
-    color: #c9a961 !important;
-    border: 1px solid rgba(201, 169, 97, 0.3) !important;
-    font-size: 0.6rem !important;
-    padding: 2px 8px !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    margin-left: 0.5rem !important;
-    vertical-align: middle !important;
+    background: rgba(201, 169, 97, 0.1);
+    color: #c9a961;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Footer buttons */
+#cc-main .pm__footer {
+    border-top: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+#cc-main .pm__btn {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    padding: 0.6rem 1.25rem;
+}
+
+/* Close button */
+#cc-main .pm__close-btn {
+    color: #c9a961;
+    opacity: 0.7;
+}
+
+#cc-main .pm__close-btn:hover {
+    color: #dfc07c;
+    opacity: 1;
 }
 
 /* Links in preferences */
 #cc-main .cc__link {
-    color: #c9a961 !important;
-    text-decoration: none !important;
-    border-bottom: 1px solid rgba(201, 169, 97, 0.4) !important;
-    transition: all 0.3s ease !important;
-    font-weight: 500 !important;
+    color: #c9a961;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.4);
+    font-weight: 500;
 }
 
 #cc-main .cc__link:hover {
-    color: #dfc07c !important;
-    border-bottom-color: #dfc07c !important;
+    color: #dfc07c;
+    border-bottom-color: #dfc07c;
 }
 
-/* Accessibility - Focus Indicators */
+/* ==========================================================================
+   Accessibility - Focus States
+   ========================================================================== */
 #cc-main .cm__btn:focus-visible,
 #cc-main .pm__btn:focus-visible,
-#cc-main .cc__link:focus-visible,
-#cc-main .cc__link--inline:focus-visible,
-#cc-main .pm__close-btn:focus-visible,
-#cc-main .section__toggle:focus-visible {
-    outline: 2px solid #ffffff !important;
-    outline-offset: 2px !important;
-    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.5) !important;
-    z-index: 10 !important;
+#cc-main .pm__close-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.5);
 }
 
-/* Ensure focus outline is visible on golden buttons */
 #cc-main .cm__btn--primary:focus-visible,
 #cc-main .pm__btn--primary:focus-visible {
-    outline-color: #1c3149 !important;
+    outline-color: #1c3149;
 }
 
-/* High contrast selection for text */
-#cc-main ::selection {
-    background: #c9a961 !important;
-    color: #1c3149 !important;
-}
-
-/* Close button - Elegant */
-#cc-main .pm__close-btn {
-    color: #c9a961 !important;
-    transition: all 0.3s ease !important;
-    opacity: 0.7 !important;
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 4px !important;
-}
-
-#cc-main .pm__close-btn:hover {
-    color: #dfc07c !important;
-    background: rgba(201, 169, 97, 0.1) !important;
-    opacity: 1 !important;
-}
-
-/* Scrollbar in preferences modal */
-#cc-main .pm__section::-webkit-scrollbar {
-    width: 6px;
-}
-
-#cc-main .pm__section::-webkit-scrollbar-track {
-    background: rgba(201, 169, 97, 0.05);
-    border-radius: 3px;
-}
-
-#cc-main .pm__section::-webkit-scrollbar-thumb {
-    background: rgba(201, 169, 97, 0.3);
-    border-radius: 3px;
-    transition: background 0.3s ease;
-}
-
-#cc-main .pm__section::-webkit-scrollbar-thumb:hover {
-    background: rgba(201, 169, 97, 0.5);
-}
-
-/* Responsive adjustments */
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
 @media (max-width: 768px) {
-    #cc-main .cm.cm--bar.cm--inline {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 1rem !important;
-        padding: 1.25rem 1.5rem !important;
-    }
-
     #cc-main .cm__title {
-        font-size: 1.1rem !important;
+        font-size: 1rem;
     }
 
     #cc-main .cm__desc {
-        max-width: 100% !important;
-        font-size: 0.85rem !important;
-    }
-
-    #cc-main .cm__btns {
-        flex-wrap: wrap !important;
-        width: 100% !important;
+        font-size: 0.8rem;
     }
 
     #cc-main .cm__btn {
-        flex: 1 !important;
-        min-width: 120px !important;
-    }
-
-    #cc-main .cm__footer {
-        margin-top: 1rem !important;
-        padding-top: 1rem !important;
+        font-size: 0.6rem;
+        padding: 0.5rem 1rem;
     }
 }
 
-/* Animation for modal appearance */
+/* ==========================================================================
+   Animation
+   ========================================================================== */
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -397,5 +252,5 @@
 }
 
 #cc-main .cm {
-    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
