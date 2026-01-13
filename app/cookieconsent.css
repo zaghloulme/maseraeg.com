@@ -110,26 +110,23 @@
     transform: translateY(-1px) !important;
 }
 
-/* Footer links - Compact, no border line */
-#cc-main .cm__footer {
-    margin-top: 0.75rem !important;
-    padding-top: 0 !important;
-    border-top: none !important;
-    background: transparent !important;
-}
-
-#cc-main .cm__footer a {
+/* Inline link in description */
+#cc-main .cc__link--inline {
     color: #c9a961 !important;
-    text-decoration: none !important;
-    font-size: 0.85rem !important;
-    font-weight: 500 !important;
-    transition: all 0.3s ease !important;
-    border-bottom: 1px solid transparent !important;
+    text-decoration: underline !important;
+    font-weight: 600 !important;
+    margin-left: 0.5rem !important;
+    white-space: nowrap !important;
 }
 
-#cc-main .cm__footer a:hover {
+#cc-main .cc__link--inline:hover {
     color: #dfc07c !important;
-    border-bottom-color: #dfc07c !important;
+    text-decoration: none !important;
+}
+
+/* Footer links - Hidden since moved inline */
+#cc-main .cm__footer {
+    display: none !important;
 }
 
 /* Preferences modal - Premium design */

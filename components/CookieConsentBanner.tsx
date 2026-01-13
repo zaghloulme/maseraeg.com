@@ -43,12 +43,10 @@ export default function CookieConsentBanner() {
                             consentModal: {
                                 title: 'We Value Your Privacy',
                                 description:
-                                    'We use cookies to enhance your experience at Ma Sera. These help us understand how you use our menu, improve our services, and show you relevant offers.',
+                                    'We use cookies to enhance your experience at Ma Sera. These help us understand how you use our menu, improve our services, and show you relevant offers. <a href="/privacy-policy" class="cc__link--inline">Privacy Policy</a>',
                                 acceptAllBtn: 'Accept All',
                                 acceptNecessaryBtn: 'Necessary Only',
                                 showPreferencesBtn: 'Customize',
-                                footer:
-                                    '<a href="/privacy-policy">Privacy Policy</a>',
                             },
                             preferencesModal: {
                                 title: 'Cookie Preferences',
