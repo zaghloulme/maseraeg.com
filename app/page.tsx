@@ -87,15 +87,6 @@ export default async function MenuPage() {
                 </section>
             )}
 
-            {/* VAT Notice */}
-            {menuGroups.length > 0 && (
-                <div className="text-center py-8 border-t border-[var(--color-border-subtle)]">
-                    <p className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">
-                        All Prices exclude 14% VAT
-                    </p>
-                </div>
-            )}
-
             {/* Contact Footer */}
             <ContactSection branches={branches} siteSettings={siteSettings} />
         </main>
