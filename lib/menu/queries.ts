@@ -52,6 +52,7 @@ export interface MenuItem {
   isActive: boolean
   isNew?: boolean
   isPopular?: boolean
+  popularAt?: 'all' | 'smouha' | 'fouad-street'
 }
 
 // Homepage Types
@@ -60,13 +61,7 @@ export interface FeatureItem {
   description: string
   icon: string
 }
-
-export interface FeaturesSection {
-  _type: 'features'
-  title: string
-  items: FeatureItem[]
-}
-
+// Homepage Types (Kept for Component Compatibility)
 export interface HeroSection {
   _type: 'hero'
   title: string
@@ -76,15 +71,40 @@ export interface HeroSection {
   ctaLink: string
 }
 
-export type HomepageSection = FeaturesSection | HeroSection
-
-export interface HomepageData {
+export interface FeaturesSection {
+  _type: 'features'
   title: string
-  sections?: HomepageSection[]
+  items: FeatureItem[]
 }
 
+
+// Site Settings Types
 // Site Settings Types
 export interface SiteSettings {
+  hero?: {
+    title: string
+    subtitle: string
+    image: unknown
+    ctaText: string
+    ctaLink: string
+  }
+  features?: FeatureItem[]
+  seo?: {
+    metaTitle?: string
+    metaDescription?: string
+    keywords?: string[]
+    canonicalUrl?: string
+    ogImage?: unknown
+    robots?: {
+      noIndex: boolean
+      noFollow: boolean
+    }
+    openGraph?: {
+      title?: string
+      description?: string
+      image?: unknown
+    }
+  }
   socialLinks?: {
     facebook?: string
     instagram?: string
@@ -100,34 +120,12 @@ export interface SiteSettings {
 // Queries
 export async function getSiteSettings(): Promise<SiteSettings> {
   return client.fetch(`*[_type == "siteSettings"][0]{
+    hero,
+    features,
+    seo,
     socialLinks,
     contactInfo
   }`)
-}
-export async function getHomepage(): Promise<HomepageData> {
-  return client.fetch(`
-    *[_type == "homepage"][0] {
-      title,
-      sections[]{
-        _type,
-        _type == 'hero' => {
-          title,
-          subtitle,
-          image,
-          ctaText,
-          ctaLink
-        },
-        _type == 'features' => {
-          title,
-          items[]{
-            title,
-            description,
-            icon
-          }
-        }
-      }
-    }
-  `)
 }
 
 export async function getBranches(): Promise<Branch[]> {
@@ -169,8 +167,6 @@ export async function getMenuCategories(): Promise<MenuCategory[]> {
       slug,
       description,
       image,
-      description,
-      image,
       displayOrder,
       isActive,
       type
@@ -204,7 +200,8 @@ export async function getMenuItems(): Promise<MenuItem[]> {
       displayOrder,
       isActive,
       isNew,
-      isPopular
+      isPopular,
+      popularAt
     }
   `)
 }
@@ -228,7 +225,17 @@ export function transformMenuItemsForDisplay(
   return items.map((item) => {
     let price: number | undefined
     let isAvailable = true
-    let isPopular = item.isPopular
+
+    // Popularity Logic
+    let isPopular = false
+    if (item.isPopular) {
+      const scope = item.popularAt || 'all'
+      if (scope === 'all') {
+        isPopular = true
+      } else if (branchSlug && scope === branchSlug) {
+        isPopular = true
+      }
+    }
 
     if (branchSlug && item.branchPricing) {
       const branchPrice = item.branchPricing.find(
@@ -237,7 +244,7 @@ export function transformMenuItemsForDisplay(
       if (branchPrice) {
         price = branchPrice.price
         isAvailable = branchPrice.isAvailable !== false
-        isPopular = !!branchPrice.isHighlighted
+        if (branchPrice.isHighlighted) isPopular = true
       }
     }
 
@@ -247,7 +254,7 @@ export function transformMenuItemsForDisplay(
       description: item.description,
       image: item.image
         ? {
-          url: urlFor(item.image).width(600).height(450).url(),
+          url: urlFor(item.image).width(450).height(800).url(),
           alt: item.name,
         }
         : undefined,
@@ -266,18 +273,83 @@ export function groupItemsByCategory(
   items: ReturnType<typeof transformMenuItemsForDisplay>,
   categories: MenuCategory[]
 ): Array<{
-  category: MenuCategory
+  category: Omit<MenuCategory, 'image'> & { image?: { url: string; alt?: string } }
   items: typeof items
 }> {
-  return categories
+  // Helper to safely get category slug
+  const getCatSlug = (c: MenuCategory) => c.slug?.current || c.name.toLowerCase().replace(/\s+/g, '-')
+
+  // 1. Map existing categories
+  const standardGroups = categories
     .map((category) => {
-      const catSlug = category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')
+      const catSlug = getCatSlug(category)
       return {
-        category,
+        category: {
+          ...category,
+          image: category.image ? {
+            url: urlFor(category.image).width(400).height(400).url(),
+            alt: category.name
+          } : undefined
+        },
         items: items.filter(
           (item) => item.categorySlug === catSlug && item.isAvailable
         ),
       }
     })
     .filter((group) => group.items.length > 0)
+
+  // 2. Identify Drink Category Slugs for type separation
+  const drinkSlugs = new Set(
+    categories
+      .filter((c) => c.type === 'drink')
+      .map(getCatSlug)
+  )
+
+  // 3. Create Popular Groups
+  const popularGroups: Array<{
+    category: Omit<MenuCategory, 'image'> & { image?: { url: string; alt?: string } }
+    items: typeof items
+  }> = []
+
+  // Popular Food
+  const popularFood = items.filter(
+    (i) => i.isPopular && i.isAvailable && !drinkSlugs.has(i.categorySlug)
+  )
+
+  if (popularFood.length > 0) {
+    popularGroups.push({
+      category: {
+        _id: 'popular-food',
+        name: 'Popular',
+        slug: { current: 'popular-food' },
+        displayOrder: -1,
+        isActive: true,
+        type: 'food',
+        description: "Our guests' favorite dishes"
+      },
+      items: popularFood
+    })
+  }
+
+  // Popular Drinks
+  const popularDrink = items.filter(
+    (i) => i.isPopular && i.isAvailable && drinkSlugs.has(i.categorySlug)
+  )
+
+  if (popularDrink.length > 0) {
+    popularGroups.push({
+      category: {
+        _id: 'popular-drinks',
+        name: 'Popular',
+        slug: { current: 'popular-drinks' },
+        displayOrder: -1,
+        isActive: true,
+        type: 'drink',
+        description: "Most loved refreshments"
+      },
+      items: popularDrink
+    })
+  }
+
+  return [...popularGroups, ...standardGroups]
 }

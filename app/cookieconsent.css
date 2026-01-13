@@ -1,0 +1,310 @@
+/**
+ * Ma Sera Cookie Consent Theme
+ * Built on vanilla-cookieconsent v3
+ * 
+ * Uses CSS variables as recommended by the official documentation:
+ * https://cookieconsent.orestbida.com/advanced/ui-customization.html
+ */
+
+/* ==========================================================================
+   CSS Variables - Ma Sera Theme
+   ========================================================================== */
+#cc-main {
+    /* Typography */
+    --cc-font-family: var(--font-body), 'Inter', system-ui, sans-serif;
+
+    /* Border radius */
+    --cc-modal-border-radius: 0;
+    --cc-btn-border-radius: 4px;
+
+    /* Z-index */
+    --cc-z-index: 2147483647;
+
+    /* Transitions */
+    --cc-modal-transition-duration: 0.3s;
+
+    /* ===== Color Scheme - Dark Mode ===== */
+
+    /* Background colors */
+    --cc-bg: #1c3149;
+    --cc-cookie-category-block-bg: transparent;
+    --cc-section-category-border: rgba(201, 169, 97, 0.15);
+
+    /* Text colors */
+    --cc-primary-color: #f8f5f0;
+    --cc-secondary-color: #c9c4bb;
+
+    /* Separator/border colors */
+    --cc-separator-border-color: rgba(201, 169, 97, 0.15);
+
+    /* Links */
+    --cc-link-color: #c9a961;
+
+    /* Primary button (Accept All) - Gold */
+    --cc-btn-primary-bg: #c9a961;
+    --cc-btn-primary-color: #1c3149;
+    --cc-btn-primary-border-color: #c9a961;
+    --cc-btn-primary-hover-bg: #dfc07c;
+    --cc-btn-primary-hover-color: #1c3149;
+    --cc-btn-primary-hover-border-color: #dfc07c;
+
+    /* Secondary button (Customize/Necessary Only) - Outlined */
+    --cc-btn-secondary-bg: transparent;
+    --cc-btn-secondary-color: #c9a961;
+    --cc-btn-secondary-border-color: rgba(201, 169, 97, 0.5);
+    --cc-btn-secondary-hover-bg: rgba(201, 169, 97, 0.1);
+    --cc-btn-secondary-hover-color: #c9a961;
+    --cc-btn-secondary-hover-border-color: #c9a961;
+
+    /* Toggle switches */
+    --cc-toggle-on-bg: #c9a961;
+    --cc-toggle-off-bg: rgba(201, 169, 97, 0.2);
+    --cc-toggle-on-knob-bg: #1c3149;
+    --cc-toggle-off-knob-bg: #f8f5f0;
+    --cc-toggle-readonly-bg: #c9a961;
+    --cc-toggle-readonly-knob-bg: #1c3149;
+
+    /* Overlay */
+    --cc-overlay-bg: rgba(0, 0, 0, 0.65);
+
+    /* Focus outline */
+    --cc-focus-ring-color: rgba(201, 169, 97, 0.6);
+}
+
+/* ==========================================================================
+   Consent Modal - Bar Layout Adjustments
+   ========================================================================== */
+
+/* Add gold top border separator */
+#cc-main .cm {
+    border-top: 1px solid #c9a961 !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Title styling */
+#cc-main .cm__title {
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+    color: #c9a961;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Description text */
+#cc-main .cm__desc {
+    color: #c9c4bb;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* Button typography */
+#cc-main .cm__btn {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    padding: 0.6rem 1.25rem;
+}
+
+/* Hide footer - link is inline */
+#cc-main .cm__footer {
+    display: none;
+}
+
+/* Necessary Only button - Same as Customize (outlined)
+   NOTE: This is a deliberate BRAND REQUIREMENT per client request.
+   The outlined style maintains visual consistency over WCAG contrast guidelines.
+   DO NOT MODIFY without explicit client approval. */
+#cc-main .cm__btn:nth-child(2) {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #c9a961 !important;
+    border: 1.5px solid rgba(201, 169, 97, 0.5) !important;
+}
+
+#cc-main .cm__btn:nth-child(2):hover {
+    background: rgba(201, 169, 97, 0.1) !important;
+    border-color: #c9a961 !important;
+}
+
+/* Inline privacy link styling */
+#cc-main .cm__desc a {
+    color: #c9a961;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+#cc-main .cm__desc a:hover {
+    color: #dfc07c;
+}
+
+/* ==========================================================================
+   Preferences Modal
+   ========================================================================== */
+
+/* Modal header */
+#cc-main .pm__header {
+    border-bottom: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+/* Modal title */
+#cc-main .pm__title {
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+    color: #c9a961;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Section titles */
+#cc-main .pm__section-title {
+    color: #f8f5f0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Section descriptions */
+#cc-main .pm__section-desc {
+    color: #c9c4bb;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* Badge styling */
+#cc-main .pm__badge {
+    background: rgba(201, 169, 97, 0.1);
+    color: #c9a961;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    font-size: 0.55rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Accordion expand/collapse arrow - Remove gold circle, keep arrow gold */
+#cc-main .pm__section-arrow {
+    background: transparent !important;
+    border: none !important;
+}
+
+#cc-main .pm__section-arrow svg,
+#cc-main .pm__section-arrow path {
+    stroke: #c9a961 !important;
+    fill: none !important;
+}
+
+/* Prevent white hover on accordion sections - comprehensive */
+#cc-main .pm__section:hover,
+#cc-main .pm__section-title-wrapper:hover,
+#cc-main .pm__section--toggle:hover,
+#cc-main .pm__section--expandable:hover,
+#cc-main .section:hover,
+#cc-main .section--toggle:hover,
+#cc-main .section--expandable:hover,
+#cc-main .section__toggle-wrapper:hover,
+#cc-main .pm__section-title-wrapper:hover .pm__section-title,
+#cc-main .pm__section .section:hover {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Ensure section backgrounds stay transparent */
+#cc-main .pm__section,
+#cc-main .pm__section--toggle,
+#cc-main .pm__section--expandable,
+#cc-main .section,
+#cc-main .section--toggle,
+#cc-main .section--expandable {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Footer buttons */
+#cc-main .pm__footer {
+    border-top: 1px solid rgba(201, 169, 97, 0.15);
+}
+
+#cc-main .pm__btn {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    padding: 0.6rem 1.25rem;
+}
+
+/* Close button */
+#cc-main .pm__close-btn {
+    color: #c9a961;
+    opacity: 0.7;
+}
+
+#cc-main .pm__close-btn:hover {
+    color: #dfc07c;
+    opacity: 1;
+}
+
+/* Links in preferences */
+#cc-main .cc__link {
+    color: #c9a961;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.4);
+    font-weight: 500;
+}
+
+#cc-main .cc__link:hover {
+    color: #dfc07c;
+    border-bottom-color: #dfc07c;
+}
+
+/* ==========================================================================
+   Accessibility - Focus States
+   ========================================================================== */
+#cc-main .cm__btn:focus-visible,
+#cc-main .pm__btn:focus-visible,
+#cc-main .pm__close-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.5);
+}
+
+#cc-main .cm__btn--primary:focus-visible,
+#cc-main .pm__btn--primary:focus-visible {
+    outline-color: #1c3149;
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 768px) {
+    #cc-main .cm__title {
+        font-size: 1rem;
+    }
+
+    #cc-main .cm__desc {
+        font-size: 0.8rem;
+    }
+
+    #cc-main .cm__btn {
+        font-size: 0.6rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* ==========================================================================
+   Animation
+   ========================================================================== */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#cc-main .cm {
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

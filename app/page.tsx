@@ -10,7 +10,6 @@ import {
     getBranches,
     getMenuCategories,
     getMenuItems,
-    getHomepage,
     getSiteSettings,
     transformMenuItemsForDisplay,
     groupItemsByCategory,
@@ -25,11 +24,10 @@ export const metadata: Metadata = {
 
 export default async function MenuPage() {
     // 1. Fetch all data in parallel
-    const [categories, items, branches, homepage, siteSettings] = await Promise.all([
+    const [categories, items, branches, siteSettings] = await Promise.all([
         getMenuCategories(),
         getMenuItems(),
         getBranches(),
-        getHomepage(),
         getSiteSettings(),
     ])
 
@@ -39,35 +37,78 @@ export default async function MenuPage() {
     // 3. Group by category
     const menuGroups = groupItemsByCategory(transformedItems, categories)
 
-    // 4. Extract data sections
-    const heroSection = homepage?.sections?.find(s => s._type === 'hero')
-    const featureSections = homepage?.sections?.filter(s => s._type === 'features') || []
+    // 4. Extract data sections from Site Settings
+    const heroSection: HeroSectionType | undefined = siteSettings?.hero ? {
+        _type: 'hero',
+        ...siteSettings.hero
+    } : undefined
+
+    // Construct Features Section from the values in siteSettings
+    const featureSections: FeaturesSectionType[] = siteSettings?.features ? [{
+        _type: 'features',
+        title: "",
+        items: siteSettings.features
+    }] : []
+
+    // 5. Split Categories & Groups
+    const foodGroups = menuGroups.filter(g => g.category.type !== 'drink')
+    const drinkGroups = menuGroups.filter(g => g.category.type === 'drink')
+
+
 
     return (
         <main className="min-h-screen pb-20">
-            {/* Hero Section from Sanity */}
-            <Hero data={heroSection as HeroSectionType} />
+            {/* Hero Section from Sanity via SiteSettings */}
+            <Hero data={heroSection} />
 
-            {/* Content Sections from Sanity */}
+            {/* Content Sections from Sanity via SiteSettings */}
             {featureSections.map((section, idx) => (
-                <Features key={idx} data={section as FeaturesSectionType} />
+                <Features key={idx} data={section} />
             ))}
 
-            {/* Category Navigation */}
-            <MenuNavigation categories={categories} />
+            {/* Category Navigation - using categories from actual groups to ensure 'Popular' is included */}
+            <MenuNavigation categories={menuGroups.map(g => g.category)} />
 
-            {/* Menu Sections */}
-            <div className="py-8 space-y-2">
-                {menuGroups.map((group) => (
-                    <MenuSection
-                        key={group.category._id}
-                        id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
-                        title={group.category.name}
-                        description={group.category.description}
-                        items={group.items}
-                        showPrices={false}
-                    />
-                ))}
+            {/* CAUTION: Category Logic - Splitting Food and Drink */}
+            <div className="py-8 space-y-20">
+                {/* 1. FOOD SECTION */}
+                <div className="space-y-2">
+                    {/* Food Categories (Includes Popular Food) */}
+                    {foodGroups.map((group) => (
+                        <MenuSection
+                            key={group.category._id}
+                            id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
+                            title={group.category.name}
+                            description={group.category.description}
+                            image={group.category.image}
+                            items={group.items}
+                            showPrices={false}
+                            // Popular sections are scrollable/featured by default if they match the ID
+                            scrollable={group.category._id === 'popular-food'}
+                            variant={group.category._id === 'popular-food' ? 'featured' : 'default'}
+                        />
+                    ))}
+                </div>
+
+                {/* 2. DRINK SECTION */}
+                {drinkGroups.length > 0 && (
+                    <div className="space-y-2">
+                        {/* Drink Categories (Includes Popular Drinks) */}
+                        {drinkGroups.map((group) => (
+                            <MenuSection
+                                key={group.category._id}
+                                id={group.category.slug?.current || group.category.name.toLowerCase().replace(/\s+/g, '-')}
+                                title={group.category.name}
+                                description={group.category.description}
+                                image={group.category.image}
+                                items={group.items}
+                                showPrices={false}
+                                scrollable={group.category._id === 'popular-drinks'}
+                                variant={group.category._id === 'popular-drinks' ? 'featured' : 'default'}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Empty State */}
@@ -85,15 +126,6 @@ export default async function MenuPage() {
                         </Link>
                     </div>
                 </section>
-            )}
-
-            {/* VAT Notice */}
-            {menuGroups.length > 0 && (
-                <div className="text-center py-8 border-t border-[var(--color-border-subtle)]">
-                    <p className="text-xs text-[var(--color-text-muted)] uppercase tracking-wider">
-                        All Prices exclude 14% VAT
-                    </p>
-                </div>
             )}
 
             {/* Contact Footer */}

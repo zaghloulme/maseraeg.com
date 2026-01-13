@@ -138,7 +138,7 @@ export default function MenuNavigation({ categories }: MenuNavigationProps) {
                     ref={scrollContainerRef}
                     className="flex-1 w-full overflow-x-auto scrollbar-hide"
                 >
-                    <div className="flex justify-start md:justify-center gap-2 min-w-max">
+                    <div className="flex justify-start gap-2 min-w-max px-1">
                         {filteredCategories.map((category) => {
                             const slug = getSlug(category)
                             const isActive = activeCategory === slug

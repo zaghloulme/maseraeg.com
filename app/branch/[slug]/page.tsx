@@ -73,27 +73,36 @@ export default async function BranchMenuPage({ params }: PageProps) {
     // Group by category
     const groupedMenu = groupItemsByCategory(displayItems, categories)
 
+    // Split and re-order: Food first, then Drinks
+    const foodGroups = groupedMenu.filter(g => g.category.type !== 'drink')
+    const drinkGroups = groupedMenu.filter(g => g.category.type === 'drink')
+    const sortedGroups = [...foodGroups, ...drinkGroups]
+
     return (
         <main className="min-h-screen">
             {/* Hero with branch name */}
             <Hero showPrices={true} branchName={branch.name} />
 
-            {/* Category Navigation */}
-            {categories.length > 0 && (
-                <MenuNavigation categories={categories} />
-            )}
+            {/* Category Navigation - synced with displayed sections */}
+            <MenuNavigation categories={sortedGroups.map(g => g.category)} />
 
             {/* Menu Sections */}
-            {groupedMenu.map(({ category, items }) => (
-                <MenuSection
-                    key={category._id}
-                    id={category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')}
-                    title={category.name}
-                    description={category.description}
-                    items={items}
-                    showPrices={true}
-                />
-            ))}
+            {sortedGroups.map(({ category, items }) => {
+                const isPopularSection = category._id === 'popular-food' || category._id === 'popular-drinks'
+                return (
+                    <MenuSection
+                        key={category._id}
+                        id={category.slug?.current || category.name.toLowerCase().replace(/\s+/g, '-')}
+                        title={category.name}
+                        description={category.description}
+                        image={category.image}
+                        items={items}
+                        showPrices={true}
+                        scrollable={isPopularSection}
+                        variant={isPopularSection ? 'featured' : 'default'}
+                    />
+                )
+            })}
 
             {/* Empty State */}
             {groupedMenu.length === 0 && (

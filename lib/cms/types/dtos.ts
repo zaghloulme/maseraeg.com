@@ -96,6 +96,7 @@ export interface CategoryDTO {
   name: string
   slug: string
   description?: string
+  image?: ImageDTO
 }
 
 
