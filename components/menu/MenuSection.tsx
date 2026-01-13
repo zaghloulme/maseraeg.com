@@ -43,40 +43,45 @@ export default function MenuSection({
             aria-labelledby={`heading-${id}`}
         >
             <div className="container-narrow">
-                {/* Category Header - Full Width Background Style */}
-                <header className="category-header mb-10 relative rounded-xl overflow-hidden min-h-[160px] md:min-h-[200px] flex flex-col items-center justify-center text-center p-8 border border-[var(--color-border-subtle)]">
-                    {/* Background Image & Overlay */}
-                    {image && (
-                        <>
-                            <div className="absolute inset-0 z-0">
-                                <img
-                                    src={image.url}
-                                    alt={image.alt || title}
-                                    className="w-full h-full object-cover opacity-80"
-                                />
+                {/* Category Header - Split Layout */}
+                <header className="category-header mb-12 relative">
+                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10">
+                        {/* Image Container - Rectangular for full visibility */}
+                        {image && (
+                            <div className="relative shrink-0 w-full md:w-auto flex justify-center md:block">
+                                <div className="relative w-48 h-48 md:w-56 md:h-40 rounded-2xl overflow-hidden border border-[var(--color-border-subtle)] shadow-2xl group">
+                                    {/* Gold overlay effect on hover (subtle) */}
+                                    <div className="absolute inset-0 bg-[var(--color-gold)] opacity-0 group-hover:opacity-10 transition-opacity duration-500 z-10" />
+                                    <img
+                                        src={image.url}
+                                        alt={image.alt || title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                </div>
+                                {/* Decorative offset border */}
+                                <div className="absolute top-3 -right-3 w-full h-full border border-[var(--color-gold)] rounded-2xl -z-10 hidden md:block opacity-30" style={{ right: '-12px', top: '12px', width: '224px', height: '160px' }} />
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#16273b] via-[#16273b]/80 to-transparent z-0" />
-                            <div className="absolute inset-0 bg-black/40 z-0" />
-                        </>
-                    )}
-
-                    {/* Content */}
-                    <div className="relative z-10 max-w-2xl">
-                        <h2
-                            id={`heading-${id}`}
-                            className="title-category text-3xl md:text-5xl font-display text-[var(--color-gold)] mb-3 focus:outline-none focus:ring-2 focus:ring-[var(--color-gold)] rounded px-4 inline-block drop-shadow-md"
-                            tabIndex={0}
-                        >
-                            {title}
-                        </h2>
-
-                        <div className="w-16 h-0.5 bg-[var(--color-gold)] mx-auto mb-4 opacity-80" />
-
-                        {description && (
-                            <p className="text-[#f0f0f0] text-sm md:text-base font-medium italic drop-shadow leading-relaxed">
-                                {description}
-                            </p>
                         )}
+
+                        {/* Text Content */}
+                        <div className="flex-1 text-center md:text-left pt-2">
+                            <div className="flex items-center justify-center md:justify-start gap-4 mb-3">
+                                <h2
+                                    id={`heading-${id}`}
+                                    className="title-category text-3xl md:text-5xl font-display text-[var(--color-gold)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded"
+                                    tabIndex={0}
+                                >
+                                    {title}
+                                </h2>
+                                <div className="h-px bg-[var(--color-gold)] opacity-30 flex-1 hidden md:block" />
+                            </div>
+
+                            {description && (
+                                <p className="text-[var(--color-text-muted)] text-sm md:text-lg italic leading-relaxed max-w-2xl">
+                                    {description}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </header>
 

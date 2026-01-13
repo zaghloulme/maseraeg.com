@@ -274,7 +274,7 @@ export function groupItemsByCategory(
         category: {
           ...category,
           image: category.image ? {
-            url: urlFor(category.image).width(800).height(600).url(),
+            url: urlFor(category.image).width(600).url(),
             alt: category.name
           } : undefined
         },
