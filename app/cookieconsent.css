@@ -91,16 +91,21 @@
     transform: translateY(0) !important;
 }
 
-/* Secondary buttons - Outlined style */
-#cc-main .cm__btn--secondary {
+/* Secondary buttons - Hollow outlined style */
+#cc-main .cm__btn--secondary,
+#cc-main .cm button[data-role="show"],
+#cc-main .cm .cm__btn:last-child {
     background: transparent !important;
+    background-color: transparent !important;
     color: #c9a961 !important;
     border: 1.5px solid rgba(201, 169, 97, 0.5) !important;
     box-shadow: none !important;
 }
 
-#cc-main .cm__btn--secondary:hover {
+#cc-main .cm__btn--secondary:hover,
+#cc-main .cm button[data-role="show"]:hover {
     background: rgba(201, 169, 97, 0.08) !important;
+    background-color: rgba(201, 169, 97, 0.08) !important;
     border-color: #c9a961 !important;
     transform: translateY(-1px) !important;
 }
