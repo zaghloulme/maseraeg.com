@@ -1,125 +1,207 @@
 /**
  * Ma Sera Cookie Consent Custom Styling
- * Overrides vanilla-cookieconsent default styles to match brand theme
+ * Premium bar layout design
  */
 
-/* Main consent modal */
+/* Main consent modal - Elegant bar design */
 #cc-main .cm {
-    background: #233b59 !important;
-    border: 1px solid rgba(201, 169, 97, 0.2) !important;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+    background: linear-gradient(135deg, #1c3149 0%, #233b59 100%) !important;
+    border: none !important;
+    border-top: 2px solid rgba(201, 169, 97, 0.4) !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4) !important;
+    padding: 1.5rem 2rem !important;
+    max-width: 100% !important;
+}
+
+/* Bar inline specific - Center content */
+#cc-main .cm.cm--bar.cm--inline {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2rem !important;
 }
 
 #cc-main .cm__title {
     color: #c9a961 !important;
     font-family: var(--font-display), 'Playfair Display', Georgia, serif !important;
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0 !important;
+    letter-spacing: 0.02em !important;
+    white-space: nowrap !important;
 }
 
 #cc-main .cm__desc {
-    color: #f8f5f0 !important;
+    color: #c9c4bb !important;
     font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
     line-height: 1.6 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0 !important;
+    flex: 1 !important;
+    max-width: 600px !important;
 }
 
-/* Buttons */
+/* Button container */
+#cc-main .cm__btns {
+    display: flex !important;
+    gap: 0.5rem !important;
+    flex-wrap: nowrap !important;
+    margin-top: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+/* Buttons - Compact premium styling */
 #cc-main .cm__btn {
     font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
+    letter-spacing: 0.08em !important;
+    font-size: 0.65rem !important;
+    padding: 0.75rem 1.5rem !important;
     border-radius: 4px !important;
-    transition: all 0.3s ease !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
 }
 
+/* Accept All - Premium gold button */
 #cc-main .cm__btn--primary {
-    background: #c9a961 !important;
-    color: #233b59 !important;
-    border: none !important;
+    background: linear-gradient(135deg, #c9a961 0%, #b89550 100%) !important;
+    color: #1c3149 !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3) !important;
 }
 
 #cc-main .cm__btn--primary:hover {
-    background: #dfc07c !important;
-    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, #dfc07c 0%, #c9a961 100%) !important;
+    box-shadow: 0 6px 16px rgba(201, 169, 97, 0.4) !important;
+    transform: translateY(-2px) !important;
 }
 
+#cc-main .cm__btn--primary:active {
+    transform: translateY(0) !important;
+}
+
+/* Secondary buttons - Outlined style */
 #cc-main .cm__btn--secondary {
     background: transparent !important;
     color: #c9a961 !important;
-    border: 1px solid #c9a961 !important;
+    border: 1.5px solid rgba(201, 169, 97, 0.5) !important;
+    box-shadow: none !important;
 }
 
 #cc-main .cm__btn--secondary:hover {
-    background: rgba(201, 169, 97, 0.1) !important;
+    background: rgba(201, 169, 97, 0.08) !important;
+    border-color: #c9a961 !important;
+    transform: translateY(-1px) !important;
 }
 
-/* Footer links */
+/* Footer links - Elegant styling */
+#cc-main .cm__footer {
+    margin-top: 1.5rem !important;
+    padding-top: 1.5rem !important;
+    border-top: 1px solid rgba(201, 169, 97, 0.15) !important;
+    background: transparent !important;
+}
+
 #cc-main .cm__footer a {
     color: #c9a961 !important;
     text-decoration: none !important;
-    transition: color 0.3s ease !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    border-bottom: 1px solid transparent !important;
 }
 
 #cc-main .cm__footer a:hover {
     color: #dfc07c !important;
-    text-decoration: underline !important;
+    border-bottom-color: #dfc07c !important;
 }
 
-/* Preferences modal */
+/* Preferences modal - Premium design */
 #cc-main .pm {
-    background: #233b59 !important;
-    border: 1px solid rgba(201, 169, 97, 0.2) !important;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+    background: linear-gradient(135deg, #1c3149 0%, #233b59 100%) !important;
+    border: 1px solid rgba(201, 169, 97, 0.3) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+    border-radius: 8px !important;
+}
+
+#cc-main .pm__header {
+    background: rgba(201, 169, 97, 0.05) !important;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.15) !important;
+    padding: 1.5rem !important;
 }
 
 #cc-main .pm__title {
     color: #c9a961 !important;
     font-family: var(--font-display), 'Playfair Display', Georgia, serif !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
 }
 
 #cc-main .pm__section-title {
     color: #f8f5f0 !important;
     font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
     font-weight: 600 !important;
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 #cc-main .pm__section-desc {
-    color: #c9c4bb !important;
+    color: #a09a94 !important;
     font-family: var(--font-body), 'Inter', system-ui, sans-serif !important;
     line-height: 1.6 !important;
+    font-size: 0.9rem !important;
 }
 
-/* Toggle switches */
+#cc-main .pm__section {
+    padding: 1.25rem !important;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.1) !important;
+}
+
+#cc-main .pm__section:last-child {
+    border-bottom: none !important;
+}
+
+/* Toggle switches - Premium gold */
 #cc-main .section__toggle {
-    background: #1c3149 !important;
+    background: rgba(201, 169, 97, 0.2) !important;
+    border: 1px solid rgba(201, 169, 97, 0.3) !important;
+    transition: all 0.3s ease !important;
 }
 
 #cc-main .section__toggle.toggle--on {
-    background: #c9a961 !important;
+    background: linear-gradient(135deg, #c9a961 0%, #b89550 100%) !important;
+    border-color: #c9a961 !important;
+    box-shadow: 0 2px 8px rgba(201, 169, 97, 0.3) !important;
 }
 
 #cc-main .toggle__icon-on,
 #cc-main .toggle__icon-off {
-    background: #233b59 !important;
+    background: #1c3149 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Badge (Always Enabled) */
+/* Badge (Always Enabled) - Refined */
 #cc-main .pm__badge {
-    background: rgba(201, 169, 97, 0.2) !important;
+    background: rgba(201, 169, 97, 0.15) !important;
     color: #c9a961 !important;
-    border: 1px solid #c9a961 !important;
-    font-size: 0.7rem !important;
-    padding: 2px 8px !important;
+    border: 1px solid rgba(201, 169, 97, 0.4) !important;
+    font-size: 0.65rem !important;
+    padding: 3px 10px !important;
     border-radius: 12px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
 }
 
 /* Links in preferences */
 #cc-main .cc__link {
     color: #c9a961 !important;
     text-decoration: none !important;
-    border-bottom: 1px solid rgba(201, 169, 97, 0.3) !important;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.4) !important;
     transition: all 0.3s ease !important;
+    font-weight: 500 !important;
 }
 
 #cc-main .cc__link:hover {
@@ -127,41 +209,89 @@
     border-bottom-color: #dfc07c !important;
 }
 
-/* Close button */
+/* Close button - Elegant */
 #cc-main .pm__close-btn {
     color: #c9a961 !important;
-    transition: color 0.3s ease !important;
+    transition: all 0.3s ease !important;
+    opacity: 0.7 !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 4px !important;
 }
 
 #cc-main .pm__close-btn:hover {
     color: #dfc07c !important;
+    background: rgba(201, 169, 97, 0.1) !important;
+    opacity: 1 !important;
 }
 
 /* Scrollbar in preferences modal */
 #cc-main .pm__section::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 #cc-main .pm__section::-webkit-scrollbar-track {
-    background: #1c3149;
+    background: rgba(201, 169, 97, 0.05);
+    border-radius: 3px;
 }
 
 #cc-main .pm__section::-webkit-scrollbar-thumb {
-    background: #6b6560;
-    border-radius: 4px;
+    background: rgba(201, 169, 97, 0.3);
+    border-radius: 3px;
+    transition: background 0.3s ease;
 }
 
 #cc-main .pm__section::-webkit-scrollbar-thumb:hover {
-    background: #c9a961;
+    background: rgba(201, 169, 97, 0.5);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    #cc-main .cm {
-        margin: 1rem !important;
+    #cc-main .cm.cm--bar.cm--inline {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+        padding: 1.25rem 1.5rem !important;
     }
 
     #cc-main .cm__title {
-        font-size: 1.25rem !important;
+        font-size: 1.1rem !important;
     }
+
+    #cc-main .cm__desc {
+        max-width: 100% !important;
+        font-size: 0.85rem !important;
+    }
+
+    #cc-main .cm__btns {
+        flex-wrap: wrap !important;
+        width: 100% !important;
+    }
+
+    #cc-main .cm__btn {
+        flex: 1 !important;
+        min-width: 120px !important;
+    }
+
+    #cc-main .cm__footer {
+        margin-top: 1rem !important;
+        padding-top: 1rem !important;
+    }
+}
+
+/* Animation for modal appearance */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#cc-main .cm {
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }

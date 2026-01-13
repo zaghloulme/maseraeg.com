@@ -14,13 +14,13 @@ export default function CookieConsentBanner() {
         CookieConsent.run({
             guiOptions: {
                 consentModal: {
-                    layout: 'box wide',
-                    position: 'bottom left',
-                    equalWeightButtons: false,
-                    flipButtons: true,
+                    layout: 'bar inline',
+                    position: 'bottom',
+                    equalWeightButtons: true,
+                    flipButtons: false,
                 },
                 preferencesModal: {
-                    layout: 'box',
+                    layout: 'bar',
                     position: 'right',
                     equalWeightButtons: false,
                     flipButtons: false,
@@ -41,10 +41,10 @@ export default function CookieConsentBanner() {
                         consentModal: {
                             title: 'We Value Your Privacy',
                             description:
-                                'We use cookies to enhance your experience at Ma Sera. These help us understand how you use our menu, improve our services, and show you relevant offers. You can customize your preferences at any time.',
+                                'We use cookies to enhance your experience at Ma Sera. These help us understand how you use our menu, improve our services, and show you relevant offers.',
                             acceptAllBtn: 'Accept All',
                             acceptNecessaryBtn: 'Necessary Only',
-                            showPreferencesBtn: 'Manage Preferences',
+                            showPreferencesBtn: 'Customize',
                             footer:
                                 '<a href="/privacy-policy">Privacy Policy</a>',
                         },
